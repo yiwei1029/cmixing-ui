@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <div class="top">顶部</div>
+        <div class="bottom">
+            <div class="aside">侧边</div>
+            <div class="main">主要</div>
+        </div>
+    </div>
+
+</body>
+<style>
+    html,body{
+        height: 100%;
+    }
+    .container{
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+    }
+    .top{
+        background-color: #bcd6d6;
+        /* height: 100%; */
+        flex-grow: 1;
+    }
+    .bottom{
+        background-color: #95b395;
+        flex-grow: 20;
+        display: flex;
+    }
+    .aside{
+        flex-grow: 1;
+        background-color: #bcd6d6;
+    }
+    .main{
+        flex-grow: 5;
+    }
+</style>
+</html>

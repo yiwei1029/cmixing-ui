@@ -1,0 +1,58 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "4485669",
+      "name": "计算器",
+      "font_class": "jisuanqi",
+      "unicode": "e52e",
+      "unicode_decimal": 58670
+    },
+    {
+      "icon_id": "12004874",
+      "name": "Browser",
+      "font_class": "Browser",
+      "unicode": "eaa4",
+      "unicode_decimal": 60068
+    },
+    {
+      "icon_id": "12004901",
+      "name": "Dashboards",
+      "font_class": "Dashboards",
+      "unicode": "eaa7",
+      "unicode_decimal": 60071
+    },
+    {
+      "icon_id": "12004981",
+      "name": "Cart",
+      "font_class": "Cart",
+      "unicode": "eaac",
+      "unicode_decimal": 60076
+    },
+    {
+      "icon_id": "21870451",
+      "name": "query",
+      "font_class": "query",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "31594760",
+      "name": "qsy-数智立方",
+      "font_class": "qsy-shuzhilifang",
+      "unicode": "e747",
+      "unicode_decimal": 59207
+    },
+    {
+      "icon_id": "33867471",
+      "name": "抄送人",
+      "font_class": "chaosongren",
+      "unicode": "e619",
+      "unicode_decimal": 58905
+    }
+  ]
+}
