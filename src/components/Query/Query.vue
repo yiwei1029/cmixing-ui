@@ -105,6 +105,7 @@
 <script>
 import * as echarts from 'echarts'
 import { createChart } from '../PlotUtils/PlotCharts.js'
+import axios from 'axios'
 export default {
     name: 'Request',
     data() {
@@ -171,10 +172,20 @@ export default {
         }
     },
     mounted() {
+        this.fetchData();
         // this.createChart('chart1', this.OutputStats)
     },
     methods: {
         createChart,
+        fetchData() {
+            axios.get('http://localhost:3000/posts')
+                .then(response => {
+                    console.log(response.data);
+                })
+                .catch(error => {
+                    console.error('There was an error!', error);
+                });
+        }
         // createChart(divName, dataArr) {
         //     var Chart = echarts.init(document.getElementById(divName))
         //     var option = {
