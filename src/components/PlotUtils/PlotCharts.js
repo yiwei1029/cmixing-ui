@@ -31,6 +31,9 @@ export function createPieChart(divName, dataArray) {
         ]
     }
     chart.setOption(option)
+    window.addEventListener('resize', function () {
+        chart.resize();
+    });
 }
 export function createMultiChart(divName, dataArray, xaxis, yaxis, nameArray) {
     var chart = echarts.init(document.getElementById(divName))
@@ -78,6 +81,9 @@ export function createMultiChart(divName, dataArray, xaxis, yaxis, nameArray) {
         ]
     }
     chart.setOption(option)
+    window.addEventListener('resize', function () {
+        chart.resize();
+    });
 }
 
 export function createChart(divName, dataArr) {
@@ -129,4 +135,7 @@ export function createChart(divName, dataArr) {
         }]
     }
     Chart.setOption(option)
+    window.addEventListener('resize', function () {
+        Chart.resize();
+    });
 }

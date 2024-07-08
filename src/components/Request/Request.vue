@@ -190,13 +190,13 @@ export default {
     align-items: center;
 
     :first-child {
-        box-sizing: border-box;
-
+flex:1;
     }
 
     :last-child {
-        box-sizing: border-box;
+        flex:1;
     }
+
 }
 
 .el-input {

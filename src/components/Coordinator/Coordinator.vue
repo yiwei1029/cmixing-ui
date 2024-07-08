@@ -2,11 +2,13 @@
     <section class="Coordinator">
         <!-- budget and privacy -->
         <el-row :gutter="10">
-            <el-col :span="8"><el-card class="box-card">
+            <el-col :span="12"><el-card class="box-card">
                     <div>Balance Status</div>
-                    <div style="width:400px; height:150px" id="chart1"></div>
-                </el-card></el-col>
-            <el-col :span="8"><el-card class="box-card" style="height:210px">
+                    <div style="width:100%; height:100%" id="chart1"></div>
+                </el-card>
+            </el-col>
+
+            <!-- <el-col :span="8"><el-card class="box-card" >
                     <div class="left-right"><span>Balance:</span><span>{{ Balance }}</span></div>
                     <div class="left-right"><span>Budget:</span><span>{{ Budget
                             }}</span>
@@ -18,28 +20,35 @@
                     <div class="left-right"><el-input v-model="BudgetReduce" style="margin-right: 10px;"></el-input>
                         <el-button @click="ClickReduceBudget" type="danger" style="width: 100%;">Remove</el-button>
                     </div>
-                </el-card></el-col>
-            <el-col :span="8"><el-card class="box-card">
+                </el-card>
+            </el-col> -->
+
+            <el-col :span="12">
+                <el-card class="box-card">
                     <div>Privacy Using Percentage</div>
-                    <div style="width:400px; height:150px" id="chart2"></div>
-                </el-card></el-col>
+                    <div style="width:100%; height:100%" id="chart2"></div>
+                </el-card>
+            </el-col>
         </el-row>
         <!-- algo and commision rate -->
         <el-row :gutter="10">
             <el-col :span="24"><el-card class="box-card">
                     <div class="left-right">
                         <span>Existing Coordination Algorithm</span>
-                        <el-select v-model="AlgoCurrentPicking" placeholder="select">
+                        <span> <el-select style="width:100%" v-model="AlgoCurrentPicking" placeholder="select">
                             <el-option v-for="item in ExistingCoordinationAlgorithm" :key="item" :value="item">
                             </el-option>
-                        </el-select>
+                        </el-select></span>
+                       
                     </div>
                     <div class="left-right">
                         <span>Existing Commission Rate</span>
-                        <el-select v-model="RateCurrentPicking" placeholder="select">
+                        <span>
+                            <el-select style="width:100%" v-model="RateCurrentPicking" placeholder="select">
                             <el-option v-for="item in ExistingCommissionRate" :key="item" :value="item">
                             </el-option>
                         </el-select>
+                        </span>
                     </div>
                 </el-card></el-col>
         </el-row>
@@ -174,53 +183,6 @@ export default {
         // },
         createPieChart,
         createMultiChart,
-        // createMultiChart(divName, dataArray, xaxis, yaxis, nameArray) {
-        //     var chart = echarts.init(document.getElementById(divName))
-        //     var option = {
-        //         tooltip: {
-        //             formatter: '{a}:{c}  @ {b}'
-        //         },
-        //         xAxis: {
-        //             data: dataArray[nameArray[0]].map(item => item[xaxis]),
-        //             name: 'Time'
-        //         },
-        //         legend: {
-        //             orient: 'horizontal',
-        //             y: 'bottom',
-        //             data: nameArray,
-        //             fontSize: 30,
-        //             // left: 250
-        //         },
-        //         yAxis: [{ name: 'Amount', position: 'left', interval: 20 }, {
-        //             name: 'Revenue', position: 'right', interval: 20
-        //         }
-        //         ],
-        //         series: [
-        //             {
-        //                 data: dataArray[nameArray[0]].map(item => item[yaxis]),
-        //                 type: 'bar',
-        //                 // stack: 'y',
-        //                 name: nameArray[0],
-        //                 // formatter: '{ d }'
-        //             },
-        //             {
-        //                 data: dataArray[nameArray[1]].map(item => item[yaxis]),
-        //                 type: 'bar',
-        //                 // stack: 'y',
-        //                 name: nameArray[1]
-
-        //             },
-        //             {
-        //                 data: dataArray[nameArray[2]].map(item => item[yaxis]),
-        //                 type: 'line',
-        //                 // stack: 'x',
-        //                 name: nameArray[2]
-
-        //             }
-        //         ]
-        //     }
-        //     chart.setOption(option)
-        // }
     }
 }
 
@@ -235,15 +197,15 @@ export default {
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
-    // align-items: stretch;
 
     :first-child {
-        box-sizing: border-box;
+flex:1;
     }
 
     :last-child {
-        box-sizing: border-box;
+        flex:1;
     }
+
 
 
 
