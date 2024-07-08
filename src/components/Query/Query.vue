@@ -12,7 +12,8 @@
             </el-col>
         </el-row>
         <!-- 左边 -->
-        <el-row :gutter="10" v-if="BlockCurrentPick">
+        <!-- <el-row :gutter="10" v-if="BlockCurrentPick"> -->
+        <el-row :gutter="10">
             <el-col :span="12">
                 <!-- input -->
 
@@ -74,28 +75,30 @@
 
                     <div class="left-right">
                         <span>Input</span>
-                        <el-select v-model="InputCurrentPick" placeholder="select an input">
+                        <span>
+                            <el-select v-model="InputCurrentPick" style="width: 100%;" placeholder="select an input">
                             <el-option v-for=" item  in  InputListToSelect " :key="item.hash" :value="item.hash">
                             </el-option>
                         </el-select>
+                            </span>
                     </div>
                     <div class="left-right">
                         <span>Output</span>
-                        <el-select v-model="OnputCurrentPick" placeholder="select an output">
+                        <span><el-select v-model="OnputCurrentPick" style="width: 100%;" placeholder="select an output">
                             <el-option v-for=" item  in  OutputListToSelect " :key="item.hash" :value="item.hash">
                             </el-option>
-                        </el-select>
+                        </el-select></span>
+                        
                     </div>
                     <div class="left-right">
                         <span><i class="iconfont icon-jisuanqi"></i></span>
-                        <el-button style="width: 222px; font-size: 12px;" @click="showProb = !showProb">Calculate The
-                            Probability</el-button>
+                        <span><el-button style="width: 100%;" @click = "showProb = !showProb">Calculate The
+                            Probability</el-button></span>
                     </div>
 
                     <el-button v-if="showProb"
                         style="width: 100%; background-color: #91cc75; color: balck;">Probability: {{
                         2 / 3 }}</el-button>
-
                 </el-card>
             </el-col>
         </el-row>
@@ -186,56 +189,7 @@ export default {
                     console.error('There was an error!', error);
                 });
         }
-        // createChart(divName, dataArr) {
-        //     var Chart = echarts.init(document.getElementById(divName))
-        //     var option = {
-        //         title: {
-        //             text: 'The Number of Outputs'
-        //         },
-        //         tooltip: {
-        //             trigger: 'item',
-        //             formatter: "{c}"
-        //         },
-        //         legend: {
-        //             orient: 'vertical',
-        //             data: ["Output's Amounts"],
-        //             right: '37%',
-        //             bottom: 10
-        //         },
-        //         xAxis: {
 
-        //             min: 0,
-        //             max: 3,
-        //             // text: 'Amounts'
-        //         },
-        //         yAxis:
-        //         {
-        //             // name: '#Outputs',
-        //             name: "Amounts",
-
-        //             data: dataArr.map(item => item.OutputAmount),
-
-        //         }
-        //         ,
-        //         series: [{
-        //             name: "Output's Amounts",
-        //             type: 'bar',
-        //             data: dataArr.map(item => item.Stats),
-        //             itemStyle: {
-        //                 borderRadius: 5,
-        //                 borderWidth: 1,
-        //                 borderType: 'solid',
-        //                 borderColor: '#73c0de',
-        //                 shadowColor: '#5470c6',
-        //                 shadowBlur: 3,
-        //                 color: '#91cc75',
-        //                 // barWidth: '2%'
-        //                 // barMaxWidth:2
-        //             }
-        //         }]
-        //     }
-        //     Chart.setOption(option)
-        // }
     }
 }
 </script>
@@ -254,16 +208,15 @@ export default {
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
-    // align-items: stretch;
     align-items: center;
 
     :first-child {
-        // box-sizing: border-box;
+        flex:1;
 
     }
 
     :last-child {
-        // box-sizing: border-box;
+        flex:1;
     }
 }
 
