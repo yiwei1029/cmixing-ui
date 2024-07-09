@@ -36,18 +36,18 @@
                     <div class="left-right">
                         <span>Existing Coordination Algorithm</span>
                         <span> <el-select style="width:100%" v-model="AlgoCurrentPicking" placeholder="select">
-                            <el-option v-for="item in ExistingCoordinationAlgorithm" :key="item" :value="item">
-                            </el-option>
-                        </el-select></span>
-                       
+                                <el-option v-for="item in ExistingCoordinationAlgorithm" :key="item" :value="item">
+                                </el-option>
+                            </el-select></span>
+
                     </div>
                     <div class="left-right">
                         <span>Existing Commission Rate</span>
                         <span>
                             <el-select style="width:100%" v-model="RateCurrentPicking" placeholder="select">
-                            <el-option v-for="item in ExistingCommissionRate" :key="item" :value="item">
-                            </el-option>
-                        </el-select>
+                                <el-option v-for="item in ExistingCommissionRate" :key="item" :value="item">
+                                </el-option>
+                            </el-select>
                         </span>
                     </div>
                 </el-card></el-col>
@@ -80,17 +80,18 @@
 
 <script>
 import * as echarts from 'echarts';
-import {createPieChart,createMultiChart} from '../PlotUtils/PlotCharts.js'
+import { createPieChart, createMultiChart } from '../PlotUtils/PlotCharts.js'
+import axios from 'axios'
 export default {
     name: 'Coordinator',
     data() {
         return {
             Balance: '100',
             Stats: [
-                { title: 'Today Active User', value: 1572 },
-                { title: 'Today Revenue', value: 37362 },
-                { title: 'Today Requests', value: 4179 },
-                { title: 'Today Transactions', value: 732 }
+                { title: 'Today Active User', value: null },
+                { title: 'Today Revenue', value: null },
+                { title: 'Today Requests', value: null },
+                { title: 'Today Transactions', value: null }
             ],
             BudgetPct:
                 [{ name: 'Available', value: 77 },
@@ -115,9 +116,20 @@ export default {
                 Revenue: [{ time: '10:50', value: 10 }, { time: '10:51', value: 22 }, { time: '10:52', value: 30 }]
 
             },
-            Budget: 0,
-            BudgetAdd: 1,
-            BudgetReduce: 1
+            config: {
+                stats: {
+                    url: 'http://localhost:8080/statistics',
+                    method: 'get',
+                    headers: {
+                        'Access-Control-Allow-Origin': '*',
+                        'Access-Control-Allow-Headers': '*',
+                        'Access-Control-Allow-Credentials': 'true'
+                    },
+                }
+            }
+            // Budget: 0,
+            // BudgetAdd: 1,
+            // BudgetReduce: 1
 
         }
     },
@@ -129,17 +141,18 @@ export default {
         this.createPieChart('chart1', this.BudgetPct)
         this.createPieChart('chart2', this.PrivacyPct)
         this.createMultiChart('chart3', this.IndicatorByTime, 'time', 'value', ['Request', 'Transaction', 'Revenue'])
+        this.fetchData(this.config.stats)
     },
     methods: {
-        ClickAddBudget() {
-            this.Budget += parseFloat(this.BudgetAdd)
-            this.Budget = this.Budget > this.Balance ? this.Balance : this.Budget
-        },
-        ClickReduceBudget() {
-            this.Budget -= parseFloat(this.BudgetReduce)
-            this.Budget = this.Budget < 0 ? 0 : this.Budget
+        // ClickAddBudget() {
+        //     this.Budget += parseFloat(this.BudgetAdd)
+        //     this.Budget = this.Budget > this.Balance ? this.Balance : this.Budget
+        // },
+        // ClickReduceBudget() {
+        //     this.Budget -= parseFloat(this.BudgetReduce)
+        //     this.Budget = this.Budget < 0 ? 0 : this.Budget
 
-        },
+        // },
         randomRgb(item) {
             let R = Math.floor(Math.random() * 200 + 50);
             let G = Math.floor(Math.random() * 200 + 50);
@@ -147,42 +160,12 @@ export default {
             // console.log(R, G, B)
             return { background: 'rgb(' + R + ',' + G + ',' + B + ', .5)', borderRadius: '5px' }
         },
-
-        // createPieChart(divName, dataArray) {
-        //     var chart = echarts.init(document.getElementById(divName));
-        //     var option = {
-        //         tooltip: {
-        //             trigger: 'item',
-        //             formatter: "{a} <br/>{b}: {c} ({d}%)"
-        //         },
-        //         legend: {
-        //             orient: 'vertical',
-        //             x: 'left',
-        //             left: 0,
-        //             data: dataArray.map(item => item.name)
-        //         },
-        //         series: [
-        //             {
-        //                 name: 'Source',
-        //                 type: 'pie',
-        //                 avoidLabelOverlap: false,
-        //                 label: {
-        //                     normal: {
-        //                         show: true,
-        //                         position: 'inside',
-        //                         formatter: '{d}%',
-        //                     },
-        //                 },
-        //                 data: [
-        //                     ...dataArray
-        //                 ]
-        //             }
-        //         ]
-        //     }
-        //     chart.setOption(option)
-        // },
         createPieChart,
         createMultiChart,
+        async fetchData(config) {
+            let response = await axios.request(config);
+            console.log(response.data)
+        }
     }
 }
 
@@ -199,11 +182,11 @@ export default {
     margin-bottom: 10px;
 
     :first-child {
-flex:1;
+        flex: 1;
     }
 
     :last-child {
-        flex:1;
+        flex: 1;
     }
 
 
