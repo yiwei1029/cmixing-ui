@@ -94,7 +94,7 @@ export default {
     name: 'Coordinator',
     data() {
         return {
-            Balance: '100',
+            // Balance: '100',
             Stats: [
                 { title: 'Today Active User', value: null },
                 { title: 'Today Revenue', value: null },

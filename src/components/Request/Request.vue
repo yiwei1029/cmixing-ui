@@ -7,14 +7,14 @@
 
                 <el-card>
                     <el-row><span>Input</span></el-row>
-                    <el-row v-for="input  in InputList" :gutter="20">
-                        <el-col :span="15">
-                            <!-- <div>{{ input.hash }}</div> -->
+                    <el-row v-for="input  in InputList" :gutter="20" :key="input.id">
+                        <!-- <el-col :span="15">
                             <el-popover placement="top-start" trigger="hover" :content="input.hash">
                                 <el-button slot="reference" type="text">{{ input.hash.substring(0, 40) + "..."
-                                    }}</el-button>
+                                    }}
+                                </el-button>
                             </el-popover>
-                        </el-col>
+                        </el-col> -->
                         <el-col :span="6">
                             <el-popover disabled>
                                 <el-button slot="reference" type="text">{{ input.amount }}</el-button>
@@ -30,13 +30,13 @@
                 <!-- output -->
                 <el-card>
                     <el-row><span>Output</span></el-row>
-                    <el-row v-for="output  in OutputList" :gutter="20">
-                        <el-col :span="15">
+                    <el-row v-for="output  in OutputList" :gutter="20" :key="output.id">
+                        <!-- <el-col :span="15">
                             <el-popover placement="top-start" trigger="hover" :content="output.hash">
                                 <el-button slot="reference" type="text">{{ output.hash.substring(0, 40) + "..."
                                     }}</el-button>
                             </el-popover>
-                        </el-col>
+                        </el-col> -->
                         <el-col :span="6">
                             <el-popover disabled>
                                 <el-button slot="reference" type="text">{{ output.amount }}</el-button>
@@ -104,7 +104,7 @@ export default {
         return {
             dialogVisible: false,
             InputList: [
-                { hash: 'bc1quqfl65xqtkprhrygpdpeg4r7q20zyaq8xvxd3a', amount: 0.00571223 },
+                // { id: 0, amount: null },
                 // { hash: 'bc1qnalwjznls42dzvaw4m5u48td032692aslqwg9m', amount: 0.00127342 },
                 // { hash: 'bc1q5t94hycpjv2uegcchfr7q30tsuhq8wd2u90cg4', amount: 0.00349666 },
                 // { hash: 'bc1qm4ztr7257hlqk3x670zr6maz36qnehczuetqrn', amount: 0.00428200 }
@@ -115,7 +115,7 @@ export default {
                 // { hash: 'bc1qnalwjznls42dzvaw4m5u48td032692aslqwg9m', amount: 0.00127342 },
                 // { hash: 'bc1q5t94hycpjv2uegcchfr7q30tsuhq8wd2u90cg4', amount: 0.00349666 },
                 // { hash: 'bc1qm4ztr7257hlqk3x670zr6maz36qnehczuetqrn', amount: 0.00428200 }
-                { hash: 'bc1qm4ztr7257hlqk3x670zr6maz36qnehczuetqrn', amount: 0.00571223 },
+                { id: 0, amount: null },
 
 
             ],
@@ -146,12 +146,15 @@ export default {
 
         },
         addInput() {
-            this.$msgbox.prompt('please input', 'Input', {
+            this.$msgbox.prompt('', 'Please input transfer amount', {
                 confirmButtonText: 'Confirm',
                 cancelButtonText: 'Cancel',
             }).then(({ value }) => {
-                const newAdd = { hash: value, amount: Math.random() }
-                this.InputList.push(newAdd)
+                // const newAdd = { hash: value, amount:  }
+                this.InputList.push({
+                    id: this.InputList.length,
+                    amount: value
+                })
                 this.$message({
                     type: 'success',
                     message: 'your input: ' + value
