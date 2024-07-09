@@ -81,6 +81,7 @@
 <script>
 import * as echarts from 'echarts';
 import { createPieChart, createMultiChart } from '../PlotUtils/PlotCharts.js'
+import { getDate } from '../PlotUtils/Date.js'
 import axios from 'axios'
 export default {
     name: 'Coordinator',
@@ -141,7 +142,16 @@ export default {
         this.createPieChart('chart1', this.BudgetPct)
         this.createPieChart('chart2', this.PrivacyPct)
         this.createMultiChart('chart3', this.IndicatorByTime, 'time', 'value', ['Request', 'Transaction', 'Revenue'])
-        this.fetchData(this.config.stats)
+        axios.request(this.config.stats).then(resp => {
+            var d = new Date();
+            let date = getDate('')
+            console.log(date)
+            let statsData = resp.data['data'][date]
+            this.Stats = [{ title: 'Today Active User', value: statsData['user_num'] },
+            { title: 'Today Revenue', value: parseFloat(statsData['revenue_amount']).toFixed(3) },
+            { title: 'Today Requests', value: statsData['request_num'] },
+            { title: 'Today Transactions', value: statsData['transaction_num'] }]
+        })
     },
     methods: {
         // ClickAddBudget() {
