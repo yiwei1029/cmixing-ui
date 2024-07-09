@@ -53,34 +53,39 @@
             <!-- 右边 -->
             <el-col :span="12">
                 <el-card>
-                    <div class="left-right">
-                        <el-select v-model="CoordToSelect" style="width: 100%;" placeholder="Select A Coordination">
-                            <el-option v-for="item in Coords" :key="item" :value="item">
 
-                            </el-option>
-                        </el-select>
-                        <!-- <el-button></el-button> -->
-
-                    </div>
                     <!-- form to sumbit c -->
                     <div>
-                        <el-form :model="Form" style="display: flex; align-items: start;">
+                        <el-form :model="form" style=" align-items: start;">
+
+                            <el-form-item>
+                                <el-select v-model="form.CoordToSelect" style="width: 100%;"
+                                    placeholder="Select A Coordination">
+                                    <el-option v-for="item in Coords" :key="item" :value="item">
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
                             <el-form-item>
                                 <el-input style="width: 200px; margin-right: 10px;" placeholder="Please input c"
-                                    v-model="Form.valueOfC"></el-input>
+                                    v-model="form.valueOfC"></el-input>
                             </el-form-item>
-                            <el-button style="width: 100%; font-size: 12px;" type="primary" @click="sendRequest">Send
+                            <el-button style="width: 100%; font-size: 12px;" type="primary" @click="onSubmit">Send
                                 Request</el-button>
                         </el-form>
                     </div>
+                    <br>
+                    <!-- 展示decompose细节 -->
                     <div>
-                        <el-button type="text" @click="dialogVisible = true">点击打开 Dialog</el-button>
+                        <!-- <el-button type="text" @click="dialogVisible = true">Check Decomposition</el-button> -->
 
-                        <el-dialog title="提示" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
-                            <span>这是一段信息</span>
+                        <el-dialog title="Details" :visible.sync="dialogVisible" width="30%"
+                            :before-close="handleClose">
+                            <span v-for="(value, key, index ) in decompose.decomposeData" :key=key>
+                                {{ key }}: {{ value }}<br>
+                            </span>
                             <span slot="footer" class="dialog-footer">
-                                <el-button @click="dialogVisible = false">取 消</el-button>
-                                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+                                <el-button @click="dialogVisible = false">cancel</el-button>
+                                <el-button type="primary" @click="dialogVisible = false">ok</el-button>
                             </span>
                         </el-dialog>
                     </div>
@@ -98,6 +103,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     name: 'Request',
     data() {
@@ -121,21 +128,44 @@ export default {
             ],
             show: true,
             NumberDisplay: false,
-            Form: {
-                valueOfC: ''
-            },
             PromptInputHash: '',
             PromptOutputHash: '',
-            Coords: ['C1', 'C2', 'C3'],
-            CoordToSelect: '',
+            Coords: ['dg', 'dr'],
+            form: {
+                // amount: InputList[0].amount,
+                CoordToSelect: '',
+                valueOfC: 0.3
+            },
+            receiveDecomposition: false,
+            decompose: {},
+
         }
     },
     components: {},
-    watch: {},
+    watch: {
+
+    },
     mounted() { },
     methods: {
-        sendRequest() {
-            this.NumberDisplay = true;
+        onSubmit() {
+            let formData = {
+                "amount": this.InputList[0].amount,
+                "method": this.form.CoordToSelect,
+                "c": this.form.valueOfC
+            }
+            axios.post('http://localhost:8080/f1/pre_transfer', formData).then(
+                resp => {
+                    // this.receiveDecomposition = !this.receiveDecomposition
+                    // this.decomposeData = resp.data.data
+                    let decomposeData = resp.data.data['processed_data']
+                    let coords = resp.data.data['data']
+                    let cValue = resp.data.data['c']
+                    let replenishData = resp.data.data['replenished_data']
+                    this.decompose = { decomposeData, coords, cValue, replenishData }
+                    this.dialogVisible = !this.dialogVisible
+                    // console.log(resp.data.data)
+                }
+            ).catch(err => { console.log(err) })
         },
         sendTransaction() {
             this.$message({
