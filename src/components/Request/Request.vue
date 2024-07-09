@@ -179,6 +179,14 @@ export default {
             this.$msgbox.prompt('', 'Please input transfer amount', {
                 confirmButtonText: 'Confirm',
                 cancelButtonText: 'Cancel',
+                inputValidator: value => {
+                    // string
+                    let parseValue = parseFloat(value)
+                    if (isNaN(parseValue) || parseValue < 0.1) {
+                        return false
+                    }
+                },
+                inputErrorMessage: 'input amount is not legal or too small(>0.1)'
             }).then(({ value }) => {
                 // const newAdd = { hash: value, amount:  }
                 this.InputList.push({
