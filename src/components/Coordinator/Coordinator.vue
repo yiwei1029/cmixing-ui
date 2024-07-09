@@ -75,12 +75,19 @@
                 </div>
             </el-col>
         </el-row>
+        <!-- 测试绘图更新 -->
+        <el-row>
+            <el-col>
+                <!-- <Chart :chartData="chartData"></Chart> -->
+            </el-col>
+        </el-row>
     </section>
 </template>
 
 <script>
 import * as echarts from 'echarts';
 import { createPieChart, createMultiChart } from '../PlotUtils/PlotCharts.js'
+import Chart from '../PlotUtils/Chart.vue'
 import { getDate } from '../PlotUtils/Date.js'
 import axios from 'axios'
 export default {
@@ -98,10 +105,10 @@ export default {
                 [{ name: 'Available', value: 77 },
                 { name: 'Occupied', value: 23 }],
             PrivacyPct: [
-                { name: 'c<0.02', value: 13 },
-                { name: 'c>0.3', value: 48 },
-                { name: '0.02<c<0.1', value: 29 },
-                { name: '0.1<c<0.3', value: 10 }
+                { name: 'c<0.02', value: null },
+                { name: 'c>0.3', value: null },
+                { name: '0.02<c<0.1', value: null },
+                { name: '0.1<c<0.3', value: null }
             ],
             ExistingCoordinationAlgorithm: [
                 'Boggart',
@@ -127,15 +134,29 @@ export default {
                         'Access-Control-Allow-Credentials': 'true'
                     },
                 }
-            }
+            },
+            chartData: [
+                { name: '衬衫', value: 5 },
+                { name: '羊毛衫', value: 20 },
+                { name: '雪纺衫', value: 36 },
+                { name: '裤子', value: 10 },
+                { name: '高跟鞋', value: 10 },
+                { name: '袜子', value: 20 }
+            ]
             // Budget: 0,
             // BudgetAdd: 1,
             // BudgetReduce: 1
 
         }
     },
-    components: {},
-    watch: {},
+    components: { Chart },
+    watch: {
+        PrivacyPct: {
+            handler(newData) {
+                this.createPieChart('chart2', this.PrivacyPct)
+            }
+        }
+    },
     mounted() {
 
 
@@ -143,14 +164,17 @@ export default {
         this.createPieChart('chart2', this.PrivacyPct)
         this.createMultiChart('chart3', this.IndicatorByTime, 'time', 'value', ['Request', 'Transaction', 'Revenue'])
         axios.request(this.config.stats).then(resp => {
-            var d = new Date();
             let date = getDate('')
-            console.log(date)
             let statsData = resp.data['data'][date]
+            // console.log(statsData['c_range2'])
             this.Stats = [{ title: 'Today Active User', value: statsData['user_num'] },
             { title: 'Today Revenue', value: parseFloat(statsData['revenue_amount']).toFixed(3) },
             { title: 'Today Requests', value: statsData['request_num'] },
             { title: 'Today Transactions', value: statsData['transaction_num'] }]
+            this.PrivacyPct = [{ name: 'c<0.02', value: statsData['c_range1'] },
+            { name: 'c>0.3', value: statsData['c_range2'] },
+            { name: '0.02<c<0.1', value: statsData['c_range3'] },
+            { name: '0.1<c<0.3', value: statsData['c_range4'] }]
         })
     },
     methods: {
@@ -175,6 +199,17 @@ export default {
         async fetchData(config) {
             let response = await axios.request(config);
             console.log(response.data)
+        },
+        updateData() {
+            // 模拟数据更新
+            this.chartData = [
+                { name: '衬衫', value: Math.random() * 50 },
+                { name: '羊毛衫', value: Math.random() * 50 },
+                { name: '雪纺衫', value: Math.random() * 50 },
+                { name: '裤子', value: Math.random() * 50 },
+                { name: '高跟鞋', value: Math.random() * 50 },
+                { name: '袜子', value: Math.random() * 50 }
+            ];
         }
     }
 }
