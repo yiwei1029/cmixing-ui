@@ -1,21 +1,23 @@
 import Vue from 'vue'
 import { Button } from 'element-ui'
-import {Form,FormItem} from 'element-ui'
-import  {Input} from 'element-ui'
+import { Form, FormItem } from 'element-ui'
+import { Input } from 'element-ui'
 import { Message } from 'element-ui'
-import { Container,Header,Aside,Main } from 'element-ui'
-import { Menu,Submenu,MenuItem,MenuItemGroup } from 'element-ui'
-import { Breadcrumb,BreadcrumbItem } from 'element-ui' 
+import { Container, Header, Aside, Main } from 'element-ui'
+import { Menu, Submenu, MenuItem, MenuItemGroup } from 'element-ui'
+import { Breadcrumb, BreadcrumbItem } from 'element-ui'
 import { Card } from 'element-ui'
-import { Row,Col } from 'element-ui'
-import { Table,TableColumn } from 'element-ui'
+import { Row, Col } from 'element-ui'
+import { Table, TableColumn } from 'element-ui'
 import { InputNumber } from 'element-ui'
 import { Statistic } from 'element-ui'
-import { Select ,Option} from 'element-ui'
+import { Select, Option } from 'element-ui'
 import { Popover } from 'element-ui'
 import { MessageBox } from 'element-ui'
-Vue.prototype.$message=Message
-Vue.prototype.$msgbox=MessageBox
+import { Dialog } from 'element-ui'
+Vue.prototype.$message = Message
+Vue.prototype.$msgbox = MessageBox
+Vue.use(Dialog)
 Vue.use(Button)
 Vue.use(Form)
 Vue.use(FormItem)

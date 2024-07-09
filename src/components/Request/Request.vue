@@ -12,7 +12,7 @@
                             <!-- <div>{{ input.hash }}</div> -->
                             <el-popover placement="top-start" trigger="hover" :content="input.hash">
                                 <el-button slot="reference" type="text">{{ input.hash.substring(0, 40) + "..."
-                                }}</el-button>
+                                    }}</el-button>
                             </el-popover>
                         </el-col>
                         <el-col :span="6">
@@ -34,7 +34,7 @@
                         <el-col :span="15">
                             <el-popover placement="top-start" trigger="hover" :content="output.hash">
                                 <el-button slot="reference" type="text">{{ output.hash.substring(0, 40) + "..."
-                                }}</el-button>
+                                    }}</el-button>
                             </el-popover>
                         </el-col>
                         <el-col :span="6">
@@ -73,6 +73,17 @@
                                 Request</el-button>
                         </el-form>
                     </div>
+                    <div>
+                        <el-button type="text" @click="dialogVisible = true">点击打开 Dialog</el-button>
+
+                        <el-dialog title="提示" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
+                            <span>这是一段信息</span>
+                            <span slot="footer" class="dialog-footer">
+                                <el-button @click="dialogVisible = false">取 消</el-button>
+                                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+                            </span>
+                        </el-dialog>
+                    </div>
                     <div class="number-display" v-if="NumberDisplay">
                         <div>#Input: {{ 5 }}</div>
                         <div>#Output: {{ 13 }}</div>
@@ -91,6 +102,7 @@ export default {
     name: 'Request',
     data() {
         return {
+            dialogVisible: false,
             InputList: [
                 { hash: 'bc1quqfl65xqtkprhrygpdpeg4r7q20zyaq8xvxd3a', amount: 0.00571223 },
                 // { hash: 'bc1qnalwjznls42dzvaw4m5u48td032692aslqwg9m', amount: 0.00127342 },
@@ -190,11 +202,11 @@ export default {
     align-items: center;
 
     :first-child {
-flex:1;
+        flex: 1;
     }
 
     :last-child {
-        flex:1;
+        flex: 1;
     }
 
 }
@@ -217,4 +229,3 @@ flex:1;
     }
 }
 </style>
-
