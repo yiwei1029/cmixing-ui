@@ -77,23 +77,23 @@
                         <span>Input</span>
                         <span>
                             <el-select v-model="InputCurrentPick" style="width: 100%;" placeholder="select an input">
-                            <el-option v-for=" item  in  InputListToSelect " :key="item.hash" :value="item.hash">
-                            </el-option>
-                        </el-select>
-                            </span>
+                                <el-option v-for=" item  in  InputListToSelect " :key="item.hash" :value="item.hash">
+                                </el-option>
+                            </el-select>
+                        </span>
                     </div>
                     <div class="left-right">
                         <span>Output</span>
                         <span><el-select v-model="OnputCurrentPick" style="width: 100%;" placeholder="select an output">
-                            <el-option v-for=" item  in  OutputListToSelect " :key="item.hash" :value="item.hash">
-                            </el-option>
-                        </el-select></span>
-                        
+                                <el-option v-for=" item  in  OutputListToSelect " :key="item.hash" :value="item.hash">
+                                </el-option>
+                            </el-select></span>
+
                     </div>
                     <div class="left-right">
                         <span><i class="iconfont icon-jisuanqi"></i></span>
-                        <span><el-button style="width: 100%;" @click = "showProb = !showProb">Calculate The
-                            Probability</el-button></span>
+                        <span><el-button style="width: 100%;" @click="showProb = !showProb">Calculate The
+                                Probability</el-button></span>
                     </div>
 
                     <el-button v-if="showProb"
@@ -109,6 +109,7 @@
 import * as echarts from 'echarts'
 import { createChart } from '../PlotUtils/PlotCharts.js'
 import axios from 'axios'
+import eventBus from '../event-bus'
 export default {
     name: 'Request',
     data() {
@@ -175,14 +176,17 @@ export default {
         }
     },
     mounted() {
-        this.fetchData();
+        // this.fetchData();
         // this.createChart('chart1', this.OutputStats)
+        eventBus.$on('block_data', this.handleBlockData)
     },
     methods: {
         createChart,
         fetchData() {
-            
-        }
+        },
+        handleBlockData(block) {
+            console.log(block)
+        },
 
     }
 }
@@ -205,12 +209,12 @@ export default {
     align-items: center;
 
     :first-child {
-        flex:1;
+        flex: 1;
 
     }
 
     :last-child {
-        flex:1;
+        flex: 1;
     }
 }
 

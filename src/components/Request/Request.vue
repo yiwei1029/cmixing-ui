@@ -56,27 +56,29 @@
 
                     <!-- form to sumbit c -->
                     <div>
-                        <el-form :model="form" style=" align-items: start;">
-
+                        <el-form :model="form">
+                            <div>Coordination</div>
                             <el-form-item>
-                                <el-select v-model="form.CoordToSelect" style="width: 100%;"
+                                <el-select style="width: 100%;" v-model="form.CoordToSelect"
                                     placeholder="Select A Coordination">
                                     <el-option v-for="item in Coords" :key="item" :value="item">
                                     </el-option>
                                 </el-select>
                             </el-form-item>
+                            <div>The c of decomposition</div>
                             <el-form-item>
-                                <el-input style="width: 200px; margin-right: 10px;" placeholder="Please input c"
+                                <el-input style="width: 100%; margin-bottom: 10px" placeholder="Please input c"
                                     v-model="form.valueOfC"></el-input>
+                                <el-button style="width: 50%;" type="primary" @click="onSubmit">Send
+                                    Request</el-button>
                             </el-form-item>
-                            <el-button style="width: 100%; font-size: 12px;" type="primary" @click="onSubmit">Send
-                                Request</el-button>
                         </el-form>
                     </div>
                     <br>
                     <!-- 展示decompose细节 -->
-                    <div>
-                        <!-- <el-button type="text" @click="dialogVisible = true">Check Decomposition</el-button> -->
+                    <div style="display: flex; ">
+                        <el-button type="info" style="flex:1;" @click="dialogVisible = true">Check
+                            Decompose</el-button>
 
                         <el-dialog title="Details" :visible.sync="dialogVisible" width="30%"
                             :before-close="handleClose">
@@ -88,14 +90,13 @@
                                 <el-button type="primary" @click="dialogVisible = false">ok</el-button>
                             </span>
                         </el-dialog>
-                    </div>
-                    <div class="number-display" v-if="NumberDisplay">
-                        <div>#Input: {{ 5 }}</div>
-                        <div>#Output: {{ 13 }}</div>
-                        <div>Fee: {{ 0.01 }}</div>
+                        <el-button type="primary" :disabled="sendTransactionDisable" style="flex:1; "
+                            @click="sendTransaction">Send
+                            Transaction</el-button>
                     </div>
 
-                    <el-button type="primary" style="width: 100%;" @click="sendTransaction">Send Transaction</el-button>
+
+
                 </el-card>
             </el-col>
         </el-row>
@@ -104,12 +105,13 @@
 
 <script>
 import axios from 'axios';
-
+import eventBus from '../event-bus.js'
 export default {
     name: 'Request',
     data() {
         return {
             dialogVisible: false,
+            sendTransactionDisable: true,
             InputList: [
                 // { id: 0, amount: null },
                 // { hash: 'bc1qnalwjznls42dzvaw4m5u48td032692aslqwg9m', amount: 0.00127342 },
@@ -122,7 +124,7 @@ export default {
                 // { hash: 'bc1qnalwjznls42dzvaw4m5u48td032692aslqwg9m', amount: 0.00127342 },
                 // { hash: 'bc1q5t94hycpjv2uegcchfr7q30tsuhq8wd2u90cg4', amount: 0.00349666 },
                 // { hash: 'bc1qm4ztr7257hlqk3x670zr6maz36qnehczuetqrn', amount: 0.00428200 }
-                { id: 0, amount: null },
+                // { id: 0, amount: null },
 
 
             ],
@@ -138,6 +140,7 @@ export default {
             },
             receiveDecomposition: false,
             decompose: {},
+            // rawDecompose: {}
 
         }
     },
@@ -157,23 +160,39 @@ export default {
                 resp => {
                     // this.receiveDecomposition = !this.receiveDecomposition
                     // this.decomposeData = resp.data.data
+                    this.rawDecompose = { ...resp.data.data }
                     let decomposeData = resp.data.data['processed_data']
                     let coords = resp.data.data['data']
                     let cValue = resp.data.data['c']
                     let replenishData = resp.data.data['replenished_data']
                     this.decompose = { decomposeData, coords, cValue, replenishData }
                     this.dialogVisible = !this.dialogVisible
+                    this.sendTransactionDisable = false
                     // console.log(resp.data.data)
                 }
             ).catch(err => { console.log(err) })
         },
         sendTransaction() {
-            this.$message({
-                type: 'success',
-                message: 'Send transaction success'
+            const loadingInstance = this.$loading({
+                lock: true,
+                text: 'Transfer in progress please wait a while...',
+                spinner: 'el-icon-loading',
+                background: 'rgba(0, 0, 0, 0.7)'
             });
-            this.$router.push('/query')
-
+            let formData = { ...this.decompose.decomposeData }
+            // console.log(formData)
+            axios.post('http://localhost:8080/f1/transfer', formData)
+                .then(resp => {
+                    console.log(resp.data)
+                    eventBus.$emit('block_data', resp.data)
+                    this.$message
+                        ({
+                            message: 'transfer successfully',
+                            type: 'success'
+                        })
+                    loadingInstance.close()
+                })
+                .catch(err => console.log(err, this))
         },
         addInput() {
             this.$msgbox.prompt('', 'Please input transfer amount', {

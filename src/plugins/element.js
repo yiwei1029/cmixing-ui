@@ -15,8 +15,10 @@ import { Select, Option } from 'element-ui'
 import { Popover } from 'element-ui'
 import { MessageBox } from 'element-ui'
 import { Dialog } from 'element-ui'
+import { Loading } from 'element-ui'
 Vue.prototype.$message = Message
 Vue.prototype.$msgbox = MessageBox
+Vue.use(Loading)
 Vue.use(Dialog)
 Vue.use(Button)
 Vue.use(Form)
