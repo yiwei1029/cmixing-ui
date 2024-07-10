@@ -65,7 +65,7 @@
         <!-- Stats -->
         <el-row :gutter="20">
 
-            <el-col :span="6" v-for="item in Stats">
+            <el-col :span="6" v-for="item in Stats" :key="item.title">
                 <div>
                     <el-statistic :title="item.title" group-separator="," :style="randomRgb()">
                         <template slot="formatter">

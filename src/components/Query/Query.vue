@@ -109,7 +109,7 @@
 import * as echarts from 'echarts'
 import { createChart } from '../PlotUtils/PlotCharts.js'
 import axios from 'axios'
-import eventBus from '../event-bus'
+import eventBus from '../event-bus.js'
 export default {
     name: 'Request',
     data() {
@@ -179,6 +179,9 @@ export default {
         // this.fetchData();
         // this.createChart('chart1', this.OutputStats)
         eventBus.$on('block_data', this.handleBlockData)
+    },
+    beforeDestroy() {
+        eventBus.$off('block_data')
     },
     methods: {
         createChart,

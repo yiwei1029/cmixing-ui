@@ -80,8 +80,7 @@
                         <el-button type="info" style="flex:1;" @click="dialogVisible = true">Check
                             Decompose</el-button>
 
-                        <el-dialog title="Details" :visible.sync="dialogVisible" width="30%"
-                            :before-close="handleClose">
+                        <el-dialog title="Details" :visible.sync="dialogVisible" width="30%">
                             <span v-for="(value, key, index ) in decompose.decomposeData" :key=key>
                                 {{ key }}: {{ value }}<br>
                             </span>
@@ -178,12 +177,13 @@ export default {
                 text: 'Transfer in progress please wait a while...',
                 spinner: 'el-icon-loading',
                 background: 'rgba(0, 0, 0, 0.7)'
-            });
+            })
             let formData = { ...this.decompose.decomposeData }
+            // eventBus.$emit('block_data', 'hello')
             // console.log(formData)
             axios.post('http://localhost:8080/f1/transfer', formData)
                 .then(resp => {
-                    console.log(resp.data)
+                    // console.log(resp.data)
                     eventBus.$emit('block_data', resp.data)
                     this.$message
                         ({
@@ -192,7 +192,7 @@ export default {
                         })
                     loadingInstance.close()
                 })
-                .catch(err => console.log(err, this))
+                .catch(err => console.log(err))
         },
         addInput() {
             this.$msgbox.prompt('', 'Please input transfer amount', {
