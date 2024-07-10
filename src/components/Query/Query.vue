@@ -178,10 +178,11 @@ export default {
     mounted() {
         // this.fetchData();
         // this.createChart('chart1', this.OutputStats)
-        eventBus.$on('block_data', this.handleBlockData)
+        // eventBus.$on('block_data', this.handleBlockData)
+        console.log(this.$store.state.blockData)
     },
     beforeDestroy() {
-        eventBus.$off('block_data')
+        // eventBus.$off('block_data')
     },
     methods: {
         createChart,

@@ -184,7 +184,8 @@ export default {
             axios.post('http://localhost:8080/f1/transfer', formData)
                 .then(resp => {
                     // console.log(resp.data)
-                    eventBus.$emit('block_data', resp.data)
+                    // eventBus.$emit('block_data', resp.data)
+                    this.$store.commit('updateBlockData', resp.data)
                     this.$message
                         ({
                             message: 'transfer successfully',
