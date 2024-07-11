@@ -12,14 +12,14 @@
             </el-col>
         </el-row>
         <!-- 左边 input output-->
-        <!-- <el-row :gutter="10" v-if="BlockCurrentPick"> -->
-        <el-row :gutter="10">
+        <el-row :gutter="10" v-if="BlockCurrentPick">
+            <!-- <el-row :gutter="10"> -->
             <el-col :span="12">
                 <!-- input -->
 
                 <el-card>
                     <el-row><span>Input</span></el-row>
-                    <el-row v-for=" input in InputList " :gutter="20" :key="input.role">
+                    <el-row v-for=" input in InputList " :gutter="20" :key="input.hash">
                         <el-col :span="20">
                             <!-- <div>{{ input.hash }}</div> -->
                             <el-popover placement="top-start" trigger="hover" :content="input.hash">
@@ -37,7 +37,7 @@
                 <!-- output -->
                 <el-card>
                     <el-row><span>Output</span></el-row>
-                    <el-row v-for=" output in OutputList" :gutter="20" :key="output.role">
+                    <el-row v-for=" output in OutputList" :gutter="20" :key="output.hash">
                         <el-col :span="20">
                             <el-popover placement="top-start" trigger="hover" :content="output.hash">
                                 <el-button slot="reference" type="text">{{ output.hash.substring(0, 40) + "..."
@@ -62,7 +62,12 @@
                         </div>
                         <div class="left-right">
                             <span>Block Hash</span>
-                            <span style="width:50%">{{ BlockBasicInfo.hash }}</span>
+                            <span style="width:50%">
+                                <el-popover placement="top-start" width="200" :content="BlockBasicInfo.hash"
+                                    trigger="hover">
+                                    <span slot="reference">{{ BlockBasicInfo.hash }}</span>
+                                </el-popover>
+                            </span>
                         </div>
                         <div class="left-right">
                             <span>Time</span>
@@ -82,16 +87,18 @@
                         <span>Input</span>
                         <span>
                             <el-select v-model="InputCurrentPick" style="width: 100%;" placeholder="select an input">
-                                <el-option v-for=" item  in  InputListToSelect " :key="item.hash" :value="item.hash">
+                                <el-option v-for=" item  in  InputList " :key="item.hash" :value="item.hash">
                                 </el-option>
                             </el-select>
                         </span>
                     </div>
                     <div class="left-right">
                         <span>Output</span>
-                        <span><el-select v-model="OnputCurrentPick" style="width: 100%;" placeholder="select an output">
-                                <el-option v-for=" item  in  OutputListToSelect " :key="item.hash" :value="item.hash">
+                        <span><el-select v-model="OutputCurrentPick" style="width: 100%;"
+                                placeholder="select an output">
+                                <el-option v-for=" item  in  OutputList " :key="item.hash" :value="item.hash">
                                 </el-option>
+                                <span>{{ OutputList[OutputCurrentPick.id] }}</span>
                             </el-select></span>
 
                     </div>
@@ -107,6 +114,12 @@
                 </el-card>
             </el-col>
         </el-row>
+        <el-backtop :bottom="50">
+            <div
+                style="height: 100%; width: 100%; display: flex; justify-content: center; align-items: center; background-color: #f2f5f6; box-shadow: 0 0 6px rgba(0,0,0, .12); text-align: center; line-height: 40px; color: #1989fa; font-size: 20px;">
+                UP
+            </div>
+        </el-backtop>
     </section>
 </template>
 
@@ -130,21 +143,14 @@ export default {
             OutputList: [
                 // { hash: 'bc1qnalwjznls42dzvaw4m5u48td032692aslqwg9m', amount: 7 },
 
-            ], InputListToSelect: [
-                { hash: 'bc1quqfl65xqtkprhrygpdpeg4r7q20zyaq8xvxd3a', amount: 20 },
-
-
             ],
-            OutputListToSelect: [
-                { hash: 'bc1qnalwjznls42dzvaw4m5u48td032692aslqwg9m', amount: 7 },
-
-
-            ],
-            InputCurrentPick: '',
-            OnputCurrentPick: '',
+            // InputSelect: {},
+            // OutputSelect: {},
+            InputCurrentPick: {},
+            OutputCurrentPick: {},
             OutputStats: [
-                { OutputAmount: 7, Stats: 3 },
-                { OutputAmount: 3, Stats: 3 },
+                // { OutputAmount: 7, Stats: 3 },
+                // { OutputAmount: 3, Stats: 3 },
 
             ],
             Blocks: [
@@ -175,12 +181,12 @@ export default {
         // this.fetchData();
         // this.createChart('chart1', this.OutputStats)
         // eventBus.$on('block_data', this.handleBlockData)
-        console.log(this.$store.state.blockData)
+        // console.log(this.$store.state.blockData)
         let blockData = this.$store.state.blockData.data
         this.Blocks.push(blockData.blockhash)
         this.BlockBasicInfo = {
             height: blockData.block.height,
-            hash: blockData.block.hash.substr(10) + '...',
+            hash: blockData.block.hash,
             time: timestampToDate(blockData.block.time)
         }
         // this.Blocks.push()
@@ -190,14 +196,28 @@ export default {
             let info = input[hash]
             let amount = info.value
             let role = info.flag
-            this.InputList.push({ hash, amount, role })
+            this.InputList.push({ hash, amount, role, id: this.InputList.length })
         }
         for (let hash in output) {
             let info = output[hash]
             let amount = info.value
             let role = info.flag
-            this.OutputList.push({ hash, amount, role })
+            this.OutputList.push({ hash, amount, role, id: this.OutputList.length })
         }
+        //统计outputlist
+        let outputStats = {}
+        for (const element of this.OutputList) {
+            let amount = element.amount
+            if (outputStats[amount]) {
+                outputStats[amount]++
+            } else {
+                outputStats[amount] = 1
+            }
+        }
+        this.OutputStats = Object.entries(outputStats).map(([key, value]) =>
+            ({ 'OutputAmount': key, 'Stats': value }))
+        // console.log(this.OutputStats)
+
     },
     beforeDestroy() {
         // eventBus.$off('block_data')

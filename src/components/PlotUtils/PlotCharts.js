@@ -105,7 +105,7 @@ export function createChart(divName, dataArr) {
         xAxis: {
 
             min: 0,
-            max: 3,
+            // max: 3,
             // text: 'Amounts'
         },
         yAxis:

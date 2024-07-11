@@ -12,8 +12,10 @@
     <script type="module">
         import { timestampToDate } from './Date.js'
         const time = 1720687272
-        console.log(timestampToDate(time))
-        console.log(1)
+        // console.log(timestampToDate(time))
+        // console.log(1)
+        const obj = { 'a': 1 }
+        console.log(Object.entries(obj).map(([key, value]) => ({ 'amount': key, value })))
     </script>
 </body>
 

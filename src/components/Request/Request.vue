@@ -8,13 +8,6 @@
                 <el-card>
                     <el-row><span>Input</span></el-row>
                     <el-row v-for="input  in InputList" :gutter="20" :key="input.id">
-                        <!-- <el-col :span="15">
-                            <el-popover placement="top-start" trigger="hover" :content="input.hash">
-                                <el-button slot="reference" type="text">{{ input.hash.substring(0, 40) + "..."
-                                    }}
-                                </el-button>
-                            </el-popover>
-                        </el-col> -->
                         <el-col :span="6">
                             <el-popover disabled>
                                 <el-button slot="reference" type="text">{{ input.amount }}</el-button>
@@ -23,35 +16,11 @@
                     </el-row>
                     <el-row>
                         <el-col :span="15">
-                            <el-button style="width: 100%;" @click="addInput">+ add a input </el-button>
+                            <el-button :disabled="disableAdd" style="width: 100%;" @click="addInput">+ add a input
+                            </el-button>
                         </el-col>
                     </el-row>
                 </el-card>
-                <!-- output -->
-                <el-card>
-                    <el-row><span>Output</span></el-row>
-                    <el-row v-for="output  in OutputList" :gutter="20" :key="output.id">
-                        <!-- <el-col :span="15">
-                            <el-popover placement="top-start" trigger="hover" :content="output.hash">
-                                <el-button slot="reference" type="text">{{ output.hash.substring(0, 40) + "..."
-                                    }}</el-button>
-                            </el-popover>
-                        </el-col> -->
-                        <el-col :span="6">
-                            <el-popover disabled>
-                                <el-button slot="reference" type="text">{{ output.amount }}</el-button>
-                            </el-popover>
-                        </el-col>
-                    </el-row>
-                    <el-row>
-                        <el-col :span="15">
-                            <el-button style="width: 100%;" @click="addOutput">+ add a output </el-button>
-                        </el-col>
-                    </el-row>
-                </el-card>
-            </el-col>
-            <!-- 右边 -->
-            <el-col :span="12">
                 <el-card>
 
                     <!-- form to sumbit c -->
@@ -82,7 +51,7 @@
 
                         <el-dialog title="Details" :visible.sync="dialogVisible" width="30%">
                             <span v-for="(value, key, index ) in decompose.decomposeData" :key=key>
-                                {{ key }}: {{ value }}<br>
+                                {{ key }}: {{ value[0][0] + ' BTC* ' + value[0][1] }}<br>
                             </span>
                             <span slot="footer" class="dialog-footer">
                                 <el-button @click="dialogVisible = false">cancel</el-button>
@@ -98,6 +67,10 @@
 
                 </el-card>
             </el-col>
+            <!-- 右边 -->
+            <el-col :span="12">
+
+            </el-col>
         </el-row>
     </section>
 </template>
@@ -109,21 +82,15 @@ export default {
     name: 'Request',
     data() {
         return {
+            // disableAdd: false,
             dialogVisible: false,
             sendTransactionDisable: true,
             InputList: [
                 // { id: 0, amount: null },
-                // { hash: 'bc1qnalwjznls42dzvaw4m5u48td032692aslqwg9m', amount: 0.00127342 },
-                // { hash: 'bc1q5t94hycpjv2uegcchfr7q30tsuhq8wd2u90cg4', amount: 0.00349666 },
-                // { hash: 'bc1qm4ztr7257hlqk3x670zr6maz36qnehczuetqrn', amount: 0.00428200 }
 
             ],
             OutputList: [
                 // { hash: 'bc1quqfl65xqtkprhrygpdpeg4r7q20zyaq8xvxd3a', amount: 0.00571223 },
-                // { hash: 'bc1qnalwjznls42dzvaw4m5u48td032692aslqwg9m', amount: 0.00127342 },
-                // { hash: 'bc1q5t94hycpjv2uegcchfr7q30tsuhq8wd2u90cg4', amount: 0.00349666 },
-                // { hash: 'bc1qm4ztr7257hlqk3x670zr6maz36qnehczuetqrn', amount: 0.00428200 }
-                // { id: 0, amount: null },
 
 
             ],
@@ -131,7 +98,7 @@ export default {
             NumberDisplay: false,
             PromptInputHash: '',
             PromptOutputHash: '',
-            Coords: ['dg', 'dr'],
+            Coords: ['dg', 'dr', 'boggart'],
             form: {
                 // amount: InputList[0].amount,
                 CoordToSelect: '',
@@ -145,9 +112,22 @@ export default {
     },
     components: {},
     watch: {
-
+        // InputList:
+        //     (newVal, oldVal) => {
+        //         console.log(newVal.length)
+        //         if (newVal.length >= 1) {
+        //             disableAdd = true
+        //         }
+        //     }
     },
-    mounted() { },
+    computed: {
+        disableAdd() {
+            // console.log(this.InputList.length)
+            return this.InputList.length > 0
+        }
+    },
+    mounted() {
+    },
     methods: {
         onSubmit() {
             let formData = {

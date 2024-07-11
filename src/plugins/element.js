@@ -16,8 +16,10 @@ import { Popover } from 'element-ui'
 import { MessageBox } from 'element-ui'
 import { Dialog } from 'element-ui'
 import { Loading } from 'element-ui'
+import { Backtop } from 'element-ui'
 Vue.prototype.$message = Message
 Vue.prototype.$msgbox = MessageBox
+Vue.use(Backtop)
 Vue.use(Loading)
 Vue.use(Dialog)
 Vue.use(Button)
