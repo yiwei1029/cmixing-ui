@@ -25,4 +25,17 @@ export function getDate(seperator) {
     var nowDate = date.getFullYear() + seperator + nowMonth + seperator + strDate;
     return nowDate;
 }
+export function timestampToDate(timestamp) {
+    let date = new Date(timestamp * 1000);  // 参数需要毫秒数，所以这里将秒数乘于 1000
+    let Y = date.getFullYear() + '-';
+    let M = transformNum(date.getMonth() + 1) + '-';
+    let D = transformNum(date.getDate()) + ' ';
+    let h = transformNum(date.getHours()) + ':';
+    let m = transformNum(date.getMinutes()) + ':';
+    let s = transformNum(date.getSeconds());
+    return Y + M + D + h + m + s
+}
+function transformNum(num) {
+    return num < 10 ? '0' + num : num
+}
 // console.log(getDate(''))
