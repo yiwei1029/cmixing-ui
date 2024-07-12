@@ -9,7 +9,8 @@ import Query from '../components/Query/Query.vue'
 
 Vue.use(VueRouter)
 
-const routes = [{path:'/',redirect:'/login'},
+const routes = [
+  {path:'/',redirect:'/home'},
   {
     path: '/login',
     name: 'login',

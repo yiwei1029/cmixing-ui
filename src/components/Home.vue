@@ -5,7 +5,7 @@
                 <img class="homelogo" src="../assets/homelogc.jpg" alt="">
                 <span>Cmixing</span>
                 <el-menu :default-active="activePath" router mode="horizontal" active-text-color="#ff73b3"
-                    v-for="menu in MenuList">
+                    v-for="menu in MenuList" :key="menu.name">
                     <el-menu-item :index="'/' + menu.path" @click="saveActive('/' + menu.name)">
                         {{ menu.name }}
                     </el-menu-item>

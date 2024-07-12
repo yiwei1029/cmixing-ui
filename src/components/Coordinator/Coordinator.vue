@@ -190,7 +190,7 @@ export default {
             })
           // console.log(Request)
           this.IndicatorByTime = {Request,Transaction,Revenue}
-          console.log(this.IndicatorByTime)
+          // console.log(this.IndicatorByTime)
         })
     },
     methods: {
