@@ -109,7 +109,7 @@
                     </div>
 
                     <el-button v-if="showProb"
-                        style="width: 100%; background-color: #91cc75; color: balck;">Probability: {{
+                        style="width: 100%; background-color: #91cc75; color: black;">Probability: {{
             2 / 3 }}</el-button>
                 </el-card>
             </el-col>
