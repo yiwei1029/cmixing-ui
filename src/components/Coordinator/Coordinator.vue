@@ -171,6 +171,15 @@ export default {
         axios.request(this.config.stats).then(resp => {
             let date = getDate('')
             let statsData = resp.data['data'][date]
+          if (statsData===undefined){
+            statsData={
+              user_num: 'NaN',
+              revenue_amount:'NaN',
+              request_num:'NaN',
+              transaction_num:'NaN'
+            }
+          }
+            // console.log(statsData==undefined)
             // console.log(statsData['c_range2'])
             this.Stats = [{ title: 'Today Active User', value: statsData['user_num'] },
             { title: 'Today Revenue', value: parseFloat(statsData['revenue_amount']).toFixed(3) },

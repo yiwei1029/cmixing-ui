@@ -6,7 +6,7 @@ export function getDate(seperator) {
     var nowMonth = date.getMonth() + 1;
 
     // 获取当前是几号
-    var strDate = date.getDate();
+    var strDate =date.getDate();
 
     // 添加分隔符“-”
     // var seperator = "-";
