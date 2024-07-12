@@ -155,7 +155,12 @@ export default {
             handler(newData) {
                 this.createPieChart('chart2', this.PrivacyPct)
             }
-        }
+        },
+      IndicatorByTime:{
+          handler(newData){
+            this.createMultiChart('chart3', this.IndicatorByTime, 'time', 'value', ['Request', 'Transaction', 'Revenue'])
+          }
+      }
     },
     mounted() {
 
@@ -175,6 +180,17 @@ export default {
             { name: 'c>0.3', value: statsData['c_range2'] },
             { name: '0.02<c<0.1', value: statsData['c_range3'] },
             { name: '0.1<c<0.3', value: statsData['c_range4'] }]
+          //获取request, transactions, revenue数据来制作图表
+          let dataObject = resp.data['data']
+          let Request=[];let Transaction=[];let Revenue = [];
+          Object.entries(dataObject).forEach(([k, v]) => {
+            Request.push({'time':k,'value':v.request_num})
+            Transaction.push({'time':k,'value':v.transaction_num})
+            Revenue.push({'time':k,'value':v.user_num})
+            })
+          // console.log(Request)
+          this.IndicatorByTime = {Request,Transaction,Revenue}
+          console.log(this.IndicatorByTime)
         })
     },
     methods: {
@@ -247,7 +263,7 @@ export default {
     justify-content: space-between;
 }
 
-// 
+//
 
 .el-button {
     // width: 100px;
