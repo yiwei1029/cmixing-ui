@@ -52,7 +52,7 @@
                     </el-row>
                 </el-card>
             </el-col>
-            <!-- 右边 block信息-->
+            <!-- 右边 block的信息-->
             <el-col :span="12">
                 <el-card>
                     <el-row>
