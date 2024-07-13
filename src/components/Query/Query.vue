@@ -4,7 +4,7 @@
         <el-row :gutter="10">
             <el-col :span="24">
                 <el-card>
-                    <el-select v-model="BlockCurrentPick" style="width: 100%" placeholder="Select a Transaction">
+                    <el-select v-model="BlockCurrentPick" style="width: 100%" placeholder="Select a Transaction" no-data-text="No block available" clearable>
                         <el-option v-for="item in Blocks" :key="item" :label="item" :value="item">
                         </el-option>
                     </el-select>
