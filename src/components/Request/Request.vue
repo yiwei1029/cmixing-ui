@@ -50,13 +50,15 @@
                             Decompose</el-button>
 
                         <el-dialog title="Details" :visible.sync="dialogVisible" width="30%">
-                            <span v-for="(value, key, index ) in decompose.decomposeData" :key=key>
-                                {{ key }}: {{ value[0][0] + ' BTC* ' + value[0][1] }}<br>
-                            </span>
+                            <div v-for="(value, key, index ) in decompose.decomposeData" :key=key>
+                              <span style="font-weight: bolder; font-size: large">{{ key }}: </span><span style="font-weight: lighter" v-for="v in value">[{{v[0]}}BTC*{{v[1]}}] </span>
+                            </div>
                             <span slot="footer" class="dialog-footer">
                                 <el-button @click="dialogVisible = false">cancel</el-button>
                                 <el-button type="primary" @click="dialogVisible = false">ok</el-button>
                             </span>
+                          <br>
+                          <div style="font-family: Georgia">FYI: <i>f</i> is sender and <i>c</i> is coordinator</div>
                         </el-dialog>
                         <el-button type="primary" :disabled="sendTransactionDisable" style="flex:1; "
                             @click="sendTransaction">Send

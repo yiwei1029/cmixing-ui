@@ -31,27 +31,27 @@
             </el-col>
         </el-row>
         <!-- algo and commision rate -->
-        <el-row :gutter="10">
-            <el-col :span="24"><el-card class="box-card">
-                    <div class="left-right">
-                        <span>Existing Coordination Algorithm</span>
-                        <span> <el-select style="width:100%" v-model="AlgoCurrentPicking" placeholder="select">
-                                <el-option v-for="item in ExistingCoordinationAlgorithm" :key="item" :value="item">
-                                </el-option>
-                            </el-select></span>
+<!--        <el-row :gutter="10">-->
+<!--            <el-col :span="24"><el-card class="box-card">-->
+<!--                    <div class="left-right">-->
+<!--                        <span>Existing Coordination Algorithm</span>-->
+<!--                        <span> <el-select style="width:100%" v-model="AlgoCurrentPicking" placeholder="select">-->
+<!--                                <el-option v-for="item in ExistingCoordinationAlgorithm" :key="item" :value="item">-->
+<!--                                </el-option>-->
+<!--                            </el-select></span>-->
 
-                    </div>
-                    <div class="left-right">
-                        <span>Existing Commission Rate</span>
-                        <span>
-                            <el-select style="width:100%" v-model="RateCurrentPicking" placeholder="select">
-                                <el-option v-for="item in ExistingCommissionRate" :key="item" :value="item">
-                                </el-option>
-                            </el-select>
-                        </span>
-                    </div>
-                </el-card></el-col>
-        </el-row>
+<!--                    </div>-->
+<!--                    <div class="left-right">-->
+<!--                        <span>Existing Commission Rate</span>-->
+<!--                        <span>-->
+<!--                            <el-select style="width:100%" v-model="RateCurrentPicking" placeholder="select">-->
+<!--                                <el-option v-for="item in ExistingCommissionRate" :key="item" :value="item">-->
+<!--                                </el-option>-->
+<!--                            </el-select>-->
+<!--                        </span>-->
+<!--                    </div>-->
+<!--                </el-card></el-col>-->
+<!--        </el-row>-->
 
 
         <!-- chart -->
