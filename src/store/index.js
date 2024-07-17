@@ -6,7 +6,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
         blockData:{},
-        budget:1,
+        budget:100,
         balance:1000
     },
     mutations: { // 用来修改state和getters里面的数据

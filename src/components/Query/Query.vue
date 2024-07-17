@@ -202,7 +202,7 @@ export default {
     methods: {
         createChart,
         handleBlockData(block) {
-            console.log(block)
+            // console.log(block)
         },
         renderAddressAmount() {
             let txData = this.$store.state.blockData.data.blcok.tx
@@ -227,12 +227,12 @@ export default {
         calculateC(inputObj, outputObj) {
             let inputNum = inputObj.amount
             let outputNum = outputObj.amount
-            console.log(inputNum, outputNum)
+            // console.log(inputNum, outputNum)
             let count = 0
             for (const output of this.OutputList) {
-                if (output.amount === outputNum) {
+                // if (output.amount === outputNum) {
                     count++
-                }
+                // }
 
             }
             this.prob = inputNum / outputNum / count

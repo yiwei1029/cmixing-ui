@@ -259,7 +259,7 @@ export default {
     margin-bottom: 10px;
 
     :first-child {
-        flex: 1;
+        flex: 2;
     }
 
     :last-child {
