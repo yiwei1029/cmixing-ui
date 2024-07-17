@@ -51,14 +51,15 @@
 
                         <el-dialog title="Details" :visible.sync="dialogVisible" width="30%">
                             <div v-for="(value, key, index ) in decompose.decomposeData" :key=key>
-                              <span style="font-weight: bolder; font-size: large">{{ key }}: </span><span style="font-weight: lighter" v-for="v in value">[{{v[0]}}BTC*{{v[1]}}] </span>
+                                <span style="font-weight: bolder; font-size: large">{{ key }}: </span><span
+                                    style="font-weight: lighter" v-for="v in value">[{{ v[0] }}BTC*{{ v[1] }}] </span>
                             </div>
                             <span slot="footer" class="dialog-footer">
                                 <el-button @click="dialogVisible = false">cancel</el-button>
                                 <el-button type="primary" @click="dialogVisible = false">ok</el-button>
                             </span>
-                          <br>
-                          <div style="font-family: Georgia">FYI: <i>f</i> is sender and <i>c</i> is coordinator</div>
+                            <br>
+                            <div style="font-family: Georgia">FYI: <i>f</i> is sender and <i>c</i> is coordinator</div>
                         </el-dialog>
                         <el-button type="primary" :disabled="sendTransactionDisable" style="flex:1; "
                             @click="sendTransaction">Send
@@ -167,6 +168,7 @@ export default {
                 .then(resp => {
                     // console.log(resp.data)
                     // eventBus.$emit('block_data', resp.data)
+                    this.$store.commit('updateBalance', this.InputList[0].amount)
                     this.$store.commit('updateBlockData', resp.data)
                     this.$message
                         ({

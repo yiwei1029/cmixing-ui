@@ -10,8 +10,9 @@
             </el-col>
 
             <el-col :span="8"><el-card class="box-card" style="height:30vh">
-                    <div class="left-right"><span>Balance:</span><span>{{ Balance }}</span></div>
-                    <div class="left-right"><span>Budget:</span><span>{{ Budget
+                    <div class="left-right"><span id="balance">Balance:</span><span>{{ $store.state.balance }}</span>
+                    </div>
+                    <div class="left-right"><span id="budget">Budget:</span><span>{{ $store.state.budget
                             }}</span>
                     </div>
                     <div class="left-right"><el-input v-model="BudgetAdd" style="margin-right: 10px;"></el-input>
@@ -96,7 +97,7 @@ export default {
     data() {
         return {
             Balance: 1000,
-            Budget: 100,
+            Budget: this.$store.state.budget,
             BudgetAdd: 1,
             BudgetReduce: 1,
             Stats: [
@@ -208,12 +209,14 @@ export default {
     },
     methods: {
         ClickAddBudget() {
-            this.Budget += parseFloat(this.BudgetAdd)
-            this.Budget = this.Budget > this.Balance ? this.Balance : this.Budget
+            this.$store.commit('addBudget', this.BudgetAdd)
+            // this.Budget = this.$store.state.budget
+            // this.Budget = this.Budget > this.Balance ? this.Balance : this.Budget
         },
         ClickReduceBudget() {
-            this.Budget -= parseFloat(this.BudgetReduce)
-            this.Budget = this.Budget < 0 ? 0 : this.Budget
+            this.$store.commit('reduceBudget', this.BudgetReduce)
+            // this.Budget -= parseFloat(this.BudgetReduce)
+            // this.Budget = this.Budget < 0 ? 0 : this.Budget
 
         },
         randomRgb(item) {
