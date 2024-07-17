@@ -172,13 +172,16 @@ export default {
     watch: {
         BlockCurrentPick: {
             handler(newVal, oldVal) {
-                setTimeout(() => {
-                    this.queryBlockById(newVal)
-                    this.createChart('chart1', this.OutputStats)
-                }, 1);
-
-
+                this.queryBlockById(newVal)
+                // setTimeout(() => {
+                //     this.createChart('chart1', this.OutputStats)
+                // }, 100);
                 // console.log({ oldVal, newVal })
+            }
+        },
+        OutputStats: {
+            handler(newVal, oldVal) {
+                this.createChart('chart1', newVal)
             }
         }
     },
@@ -245,7 +248,8 @@ export default {
                     time: timestampToDate(dataTemp.data.block.time)
                 }
 
-
+                this.InputList = []
+                this.OutputList = []
                 let input = dataTemp.data['format_data']['input']
                 let output = dataTemp.data['format_data']['output']
                 for (let hash in input) {
