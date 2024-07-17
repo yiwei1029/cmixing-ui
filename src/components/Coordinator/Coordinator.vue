@@ -2,14 +2,14 @@
     <section class="Coordinator">
         <!-- budget and privacy -->
         <el-row :gutter="10">
-            <el-col :span="8"><el-card class="box-card" style="height:30vh">
+            <!-- <el-col :span="8"><el-card class="box-card" style="height:30vh">
                     <div>Balance Status</div>
                     <div style="width:100%; height:20vh;object-fit: cover;" id="chart1"></div>
                 </el-card>
 
-            </el-col>
+            </el-col> -->
 
-            <el-col :span="8"><el-card class="box-card" style="height:30vh">
+            <el-col :span="12"><el-card class="box-card" style="height:30vh">
                     <div class="left-right"><span id="balance">Balance:</span><span>{{ $store.state.balance }}</span>
                     </div>
                     <div class="left-right"><span id="budget">Budget:</span><span>{{ $store.state.budget
@@ -25,7 +25,7 @@
                 </el-card>
             </el-col>
 
-            <el-col :span="8">
+            <el-col :span="12">
                 <el-card class="box-card" style="height:30vh">
                     <div>Privacy Using Percentage</div>
                     <div style="width:100%; height:20vh;object-fit: cover;" id="chart2"></div>
@@ -170,7 +170,7 @@ export default {
     mounted() {
 
 
-        this.createPieChart('chart1', this.BudgetPct)
+        // this.createPieChart('chart1', this.BudgetPct)
         this.createPieChart('chart2', this.PrivacyPct)
         this.createMultiChart('chart3', this.IndicatorByTime, 'time', 'value', ['Request', 'Transaction', 'Revenue'])
         axios.request(this.config.stats).then(resp => {

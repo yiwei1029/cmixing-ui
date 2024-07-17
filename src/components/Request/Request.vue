@@ -132,6 +132,13 @@ export default {
     mounted() {
     },
     methods: {
+        sumArr(arr) {
+            let sum = 1.0
+            for (let i = 0; i < arr.length; i++) {
+                sum = sum * parseFloat(arr[i])
+            }
+            return sum
+        },
         onSubmit() {
             let formData = {
                 "amount": this.InputList[0].amount,
@@ -144,6 +151,28 @@ export default {
                     // this.decomposeData = resp.data.data
                     this.rawDecompose = { ...resp.data.data }
                     let decomposeData = resp.data.data['processed_data']
+                    // console.log(decomposeData)
+                    //判断支付coord的费用是否大于budget
+                    let sum = 0
+                    for (let key in decomposeData) {
+                        if (key.startsWith('c')) {
+                            for (let item of decomposeData[key]) {
+                                // console.log(item)
+                                let temp = this.sumArr(item)
+                                sum += temp
+                            }
+                        }
+                    }
+                    // console.log('sum: ', sum)
+                    if (sum > this.$store.state.budget) {
+                        this.$message({
+                            message: `Insufficient balance! At least ${sum}`,
+                            type: 'error'
+                        })
+                        return
+                    }
+
+                    //budget充足
                     let coords = resp.data.data['data']
                     let cValue = resp.data.data['c']
                     let replenishData = resp.data.data['replenished_data']
