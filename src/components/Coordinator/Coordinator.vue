@@ -2,13 +2,14 @@
     <section class="Coordinator">
         <!-- budget and privacy -->
         <el-row :gutter="10">
-            <el-col :span="12"><el-card class="box-card">
+            <el-col :span="8"><el-card class="box-card" style="height:30vh">
                     <div>Balance Status</div>
-                    <div style="width:100%; height:100%" id="chart1"></div>
+                    <div style="width:100%; height:20vh;object-fit: cover;" id="chart1"></div>
                 </el-card>
+
             </el-col>
 
-            <!-- <el-col :span="8"><el-card class="box-card" >
+            <el-col :span="8"><el-card class="box-card" style="height:30vh">
                     <div class="left-right"><span>Balance:</span><span>{{ Balance }}</span></div>
                     <div class="left-right"><span>Budget:</span><span>{{ Budget
                             }}</span>
@@ -21,37 +22,37 @@
                         <el-button @click="ClickReduceBudget" type="danger" style="width: 100%;">Remove</el-button>
                     </div>
                 </el-card>
-            </el-col> -->
+            </el-col>
 
-            <el-col :span="12">
-                <el-card class="box-card">
+            <el-col :span="8">
+                <el-card class="box-card" style="height:30vh">
                     <div>Privacy Using Percentage</div>
-                    <div style="width:100%; height:100%" id="chart2"></div>
+                    <div style="width:100%; height:20vh;object-fit: cover;" id="chart2"></div>
                 </el-card>
             </el-col>
         </el-row>
         <!-- algo and commision rate -->
-<!--        <el-row :gutter="10">-->
-<!--            <el-col :span="24"><el-card class="box-card">-->
-<!--                    <div class="left-right">-->
-<!--                        <span>Existing Coordination Algorithm</span>-->
-<!--                        <span> <el-select style="width:100%" v-model="AlgoCurrentPicking" placeholder="select">-->
-<!--                                <el-option v-for="item in ExistingCoordinationAlgorithm" :key="item" :value="item">-->
-<!--                                </el-option>-->
-<!--                            </el-select></span>-->
+        <!--        <el-row :gutter="10">-->
+        <!--            <el-col :span="24"><el-card class="box-card">-->
+        <!--                    <div class="left-right">-->
+        <!--                        <span>Existing Coordination Algorithm</span>-->
+        <!--                        <span> <el-select style="width:100%" v-model="AlgoCurrentPicking" placeholder="select">-->
+        <!--                                <el-option v-for="item in ExistingCoordinationAlgorithm" :key="item" :value="item">-->
+        <!--                                </el-option>-->
+        <!--                            </el-select></span>-->
 
-<!--                    </div>-->
-<!--                    <div class="left-right">-->
-<!--                        <span>Existing Commission Rate</span>-->
-<!--                        <span>-->
-<!--                            <el-select style="width:100%" v-model="RateCurrentPicking" placeholder="select">-->
-<!--                                <el-option v-for="item in ExistingCommissionRate" :key="item" :value="item">-->
-<!--                                </el-option>-->
-<!--                            </el-select>-->
-<!--                        </span>-->
-<!--                    </div>-->
-<!--                </el-card></el-col>-->
-<!--        </el-row>-->
+        <!--                    </div>-->
+        <!--                    <div class="left-right">-->
+        <!--                        <span>Existing Commission Rate</span>-->
+        <!--                        <span>-->
+        <!--                            <el-select style="width:100%" v-model="RateCurrentPicking" placeholder="select">-->
+        <!--                                <el-option v-for="item in ExistingCommissionRate" :key="item" :value="item">-->
+        <!--                                </el-option>-->
+        <!--                            </el-select>-->
+        <!--                        </span>-->
+        <!--                    </div>-->
+        <!--                </el-card></el-col>-->
+        <!--        </el-row>-->
 
 
         <!-- chart -->
@@ -94,7 +95,10 @@ export default {
     name: 'Coordinator',
     data() {
         return {
-            // Balance: '100',
+            Balance: 1000,
+            Budget: 100,
+            BudgetAdd: 1,
+            BudgetReduce: 1,
             Stats: [
                 { title: 'Today Active User', value: null },
                 { title: 'Today Revenue', value: null },
@@ -156,11 +160,11 @@ export default {
                 this.createPieChart('chart2', this.PrivacyPct)
             }
         },
-      IndicatorByTime:{
-          handler(newData){
-            this.createMultiChart('chart3', this.IndicatorByTime, 'time', 'value', ['Request', 'Transaction', 'Revenue'])
-          }
-      }
+        IndicatorByTime: {
+            handler(newData) {
+                this.createMultiChart('chart3', this.IndicatorByTime, 'time', 'value', ['Request', 'Transaction', 'Revenue'])
+            }
+        }
     },
     mounted() {
 
@@ -171,14 +175,14 @@ export default {
         axios.request(this.config.stats).then(resp => {
             let date = getDate('')
             let statsData = resp.data['data'][date]
-          if (statsData===undefined){
-            statsData={
-              user_num: 'NaN',
-              revenue_amount:'NaN',
-              request_num:'NaN',
-              transaction_num:'NaN'
+            if (statsData === undefined) {
+                statsData = {
+                    user_num: 0,
+                    revenue_amount: 0,
+                    request_num: 0,
+                    transaction_num: 0
+                }
             }
-          }
             // console.log(statsData==undefined)
             // console.log(statsData['c_range2'])
             this.Stats = [{ title: 'Today Active User', value: statsData['user_num'] },
@@ -189,29 +193,29 @@ export default {
             { name: 'c>0.3', value: statsData['c_range2'] },
             { name: '0.02<c<0.1', value: statsData['c_range3'] },
             { name: '0.1<c<0.3', value: statsData['c_range4'] }]
-          //获取request, transactions, revenue数据来制作图表
-          let dataObject = resp.data['data']
-          let Request=[];let Transaction=[];let Revenue = [];
-          Object.entries(dataObject).forEach(([k, v]) => {
-            Request.push({'time':k,'value':v.request_num})
-            Transaction.push({'time':k,'value':v.transaction_num})
-            Revenue.push({'time':k,'value':v.user_num})
+            //获取request, transactions, revenue数据来制作图表
+            let dataObject = resp.data['data']
+            let Request = []; let Transaction = []; let Revenue = [];
+            Object.entries(dataObject).forEach(([k, v]) => {
+                Request.push({ 'time': k, 'value': v.request_num })
+                Transaction.push({ 'time': k, 'value': v.transaction_num })
+                Revenue.push({ 'time': k, 'value': v.user_num })
             })
-          // console.log(Request)
-          this.IndicatorByTime = {Request,Transaction,Revenue}
-          // console.log(this.IndicatorByTime)
+            // console.log(Request)
+            this.IndicatorByTime = { Request, Transaction, Revenue }
+            // console.log(this.IndicatorByTime)
         })
     },
     methods: {
-        // ClickAddBudget() {
-        //     this.Budget += parseFloat(this.BudgetAdd)
-        //     this.Budget = this.Budget > this.Balance ? this.Balance : this.Budget
-        // },
-        // ClickReduceBudget() {
-        //     this.Budget -= parseFloat(this.BudgetReduce)
-        //     this.Budget = this.Budget < 0 ? 0 : this.Budget
+        ClickAddBudget() {
+            this.Budget += parseFloat(this.BudgetAdd)
+            this.Budget = this.Budget > this.Balance ? this.Balance : this.Budget
+        },
+        ClickReduceBudget() {
+            this.Budget -= parseFloat(this.BudgetReduce)
+            this.Budget = this.Budget < 0 ? 0 : this.Budget
 
-        // },
+        },
         randomRgb(item) {
             let R = Math.floor(Math.random() * 200 + 50);
             let G = Math.floor(Math.random() * 200 + 50);

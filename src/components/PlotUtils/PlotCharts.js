@@ -43,7 +43,8 @@ export function createMultiChart(divName, dataArray, xaxis, yaxis, nameArray) {
         },
         xAxis: {
             data: dataArray[nameArray[0]].map(item => item[xaxis]),
-            name: 'Time'
+            name: 'Time',
+            fontSize: 20
         },
         legend: {
             orient: 'horizontal',
@@ -52,10 +53,9 @@ export function createMultiChart(divName, dataArray, xaxis, yaxis, nameArray) {
             fontSize: 30,
             // left: 250
         },
-        yAxis: [{ name: 'Amount', position: 'left', interval: 20 }, {
-            name: 'Revenue', position: 'right', interval: 20
-        }
-        ],
+        yAxis: [{ name: 'Amount', position: 'left', interval: 60 ,fontWeight: 'bold'}, {
+            name: 'Revenue', position: 'right', interval: 60,fontWeight: 'bold'
+        }],
         series: [
             {
                 data: dataArray[nameArray[0]].map(item => item[yaxis]),
