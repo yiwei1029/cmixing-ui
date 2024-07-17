@@ -4,7 +4,8 @@
         <el-row :gutter="10">
             <el-col :span="24">
                 <el-card>
-                    <el-select v-model="BlockCurrentPick" style="width: 100%" placeholder="Select a Transaction" no-data-text="No block available" clearable>
+                    <el-select v-model="BlockCurrentPick" style="width: 100%" placeholder="Select a Transaction"
+                        no-data-text="No block available" clearable>
                         <el-option v-for="item in Blocks" :key="item" :label="item" :value="item">
                         </el-option>
                     </el-select>
@@ -98,19 +99,20 @@
                                 placeholder="select an output">
                                 <el-option v-for=" item  in  OutputList " :key="item.hash" :value="item.hash">
                                 </el-option>
-                                <span>{{ OutputList[OutputCurrentPick.id] }}</span>
-                            </el-select></span>
 
+                            </el-select></span>
+                        <!-- <span>{{ OutputCurrentPick.id }}</span> -->
                     </div>
+                    <!-- <div>{{ findOutputByHash(OutputCurrentPick) }}</div> -->
                     <div class="left-right">
                         <span><i class="iconfont icon-jisuanqi"></i></span>
-                        <span><el-button style="width: 100%;" @click="showProb = !showProb">Calculate The
+                        <span><el-button style="width: 100%;" @click="calculateC(findInputByHash(InputCurrentPick),
+            findOutputByHash(OutputCurrentPick))">Calculate The
                                 Probability</el-button></span>
                     </div>
 
-                    <el-button v-if="showProb"
-                        style="width: 100%; background-color: #91cc75; color: black;">Probability: {{
-            2 / 3 }}</el-button>
+                    <el-button style="width: 100%; background-color: #91cc75; color: black;">Probability: {{
+            prob }}</el-button>
                 </el-card>
             </el-col>
         </el-row>
@@ -146,8 +148,8 @@ export default {
             ],
             // InputSelect: {},
             // OutputSelect: {},
-            InputCurrentPick: {},
-            OutputCurrentPick: {},
+            InputCurrentPick: '',
+            OutputCurrentPick: '',
             OutputStats: [
                 // { OutputAmount: 7, Stats: 3 },
                 // { OutputAmount: 3, Stats: 3 },
@@ -161,7 +163,8 @@ export default {
                 height: null,
                 hash: '',
                 time: ''
-            }
+            },
+            prob: 0
         }
     },
     components: {},
@@ -230,8 +233,37 @@ export default {
         renderAddressAmount() {
             let txData = this.$store.state.blockData.data.blcok.tx
 
-        }
+        },
+        findOutputByHash(hash) {
+            for (let output of this.OutputList) {
+                if (output.hash === hash) {
+                    return output
+                }
+            }
+            return null
+        },
+        findInputByHash(hash) {
+            for (let input of this.InputList) {
+                if (input.hash === hash) {
+                    return input
+                }
+            }
+            return null
+        },
+        calculateC(inputObj, outputObj) {
+            let inputNum = inputObj.amount
+            let outputNum = outputObj.amount
+            console.log(inputNum, outputNum)
+            let count = 0
+            for (const output of this.OutputList) {
+                if (output.amount === outputNum) {
+                    count++
+                }
+                
+            }
+            this.prob = inputNum / outputNum / count
 
+        },
     }
 }
 </script>
