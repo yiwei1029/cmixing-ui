@@ -58,7 +58,7 @@
 
                 <el-card>
                     <div>Latest transactions</div><br>
-                    <div v-for="([t, b]) in BlockTimeList">
+                    <div v-for="([t, b]) in BlockTimeList" class="left-right">
                         <span style="font-size: 14px;">
                             {{ t }}
                         </span>
@@ -334,6 +334,22 @@ export default {
 }
 
 .left-right {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    align-items: center;
+
+    :first-child {
+        flex: 1;
+
+    }
+
+    :last-child {
+        flex: 1;
+    }
+}
+
+.left-right1 {
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
