@@ -293,11 +293,12 @@ export default {
                 // console.log(resp.data.data)
                 let tempData = resp.data.data
                 for (let input in tempData) {
-                    if (input === this.InputCurrentPick) {
+                    if (input == this.InputCurrentPick) {
                         let problist = tempData[input]
-                        // console.log(problist)
+                        console.log(problist)
                         for (let probres of problist) {
-                            if (probres.address === this.OutputCurrentPick) {
+                            if (probres.address == this.OutputCurrentPick) {
+                                console.log(probres.address)
                                 this.prob = probres.probability
                                 console.log(this.prob)
                             }

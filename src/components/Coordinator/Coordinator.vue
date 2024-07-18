@@ -253,9 +253,9 @@ export default {
 
         },
         randomRgb(item) {
-            let R = Math.floor(Math.random() * 100 + 102);
-            let G = Math.floor(Math.random() * 100 + 177);
-            let B = Math.floor(Math.random() * 100 + 255);
+            let R = Math.floor(Math.random() * 255);
+            let G = Math.floor(Math.random() * 255);
+            let B = Math.floor(Math.random() * 255);
             // console.log(R, G, B)
             return {
                 background: 'rgb(' + R + ',' + G + ',' + B + ', .5)', borderRadius: '5px',
