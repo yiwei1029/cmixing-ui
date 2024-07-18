@@ -53,30 +53,44 @@
                     </el-row>
                 </el-card>
             </el-col>
-            <!-- 右边 block的信息-->
             <el-col :span="12">
-                <el-card>
-                    <el-row>
-                        <div class="left-right">
-                            <span>Block Height</span>
-                            <span style="width:50%">{{ BlockBasicInfo.height }}</span>
-                        </div>
-                        <div class="left-right">
-                            <span>Block Hash</span>
-                            <span style="width:50%">
-                                <el-popover placement="top-start" width="200" :content="BlockBasicInfo.hash"
-                                    trigger="hover">
-                                    <span slot="reference">{{ BlockBasicInfo.hash }}</span>
-                                </el-popover>
-                            </span>
-                        </div>
-                        <div class="left-right">
-                            <span>Time</span>
-                            <span style="width:50%">{{ BlockBasicInfo.time }}</span>
-                        </div>
-                    </el-row>
+                <!-- 最近的交易 -->
 
+                <el-card>
+                    <div>Latest transactions</div><br>
+                    <div v-for="([t, b]) in BlockTimeList">
+                        <span style="font-size: 14px;">
+                            {{ t }}
+                        </span>
+                        <span style="font-size: 14px; cursor: pointer; " @click="BlockCurrentPick = b">{{ b }}
+                        </span>
+                    </div>
                 </el-card>
+
+                <!-- 右边 block的信息-->
+
+
+                <el-card>
+                    <div class="left-right">
+                        <span>Block Height</span>
+                        <span style="width:50%">{{ BlockBasicInfo.height }}</span>
+                    </div>
+                    <div class="left-right">
+                        <span>Block Hash</span>
+                        <span style="width:50%">
+                            <el-popover placement="top-start" width="200" :content="BlockBasicInfo.hash"
+                                trigger="hover">
+                                <span slot="reference">{{ BlockBasicInfo.hash }}</span>
+                            </el-popover>
+                        </span>
+                    </div>
+                    <div class="left-right">
+                        <span>Time</span>
+                        <span style="width:50%">{{ BlockBasicInfo.time }}</span>
+                    </div>
+                </el-card>
+
+
                 <!-- chart图表 -->
                 <el-card>
                     <div id="chart1" style="width:100%; height:200px"></div>
@@ -138,6 +152,8 @@ export default {
             Prob: '',
             showProb: false,
             BlockList: [],
+            TimeList: [],
+            BlockTimeList: [],
             InputList: [
                 // { hash: 'bc1quqfl65xqtkprhrygpdpeg4r7q20zyaq8xvxd3a', amount: 20 },
 
@@ -168,6 +184,11 @@ export default {
             prob: 0
         }
     },
+    computed: {
+        // BlockTimeList: function () {
+        //     this.TimeList.map((e, i) => [e, this.BlockList[i]])
+        // }
+    },
     components: {},
     watch: {
         BlockCurrentPick: {
@@ -192,7 +213,13 @@ export default {
             for (const txid of resp.data.data) {
                 this.BlockList.push(txid)
                 // console.log(txid)
+
             }
+            this.getBlockTime(this.BlockList)
+            // this.BlockTimeList = this.TimeList.map((e, i) => [e, this.BlockList[i]])
+            console.log(this.BlockTimeList)
+
+            // console.log(this.TimeList)
         }).catch(err => { console.error(err) })
 
     },
@@ -231,12 +258,24 @@ export default {
             let count = 0
             for (const output of this.OutputList) {
                 // if (output.amount === outputNum) {
-                    count++
+                count++
                 // }
 
             }
             this.prob = inputNum / outputNum / count
 
+        },
+        getBlockTime(blockList) {
+            const promises = []
+            for (const blockId of blockList) {
+                const promise = axios.get("http://localhost:8080/f1/transfer/" + blockId).then(resp => {
+                    this.TimeList.push(timestampToDate(resp.data.data.block.time))
+                })
+                promises.push(promise)
+            }
+            Promise.all(promises).then(() => {
+                this.BlockTimeList = this.TimeList.map((e, i) => [e, this.BlockList[i]])
+            })
         },
         queryBlockById(blockId) {
             axios.get("http://localhost:8080/f1/transfer/" + blockId).then(resp => {
