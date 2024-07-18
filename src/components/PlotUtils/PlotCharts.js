@@ -2,6 +2,11 @@ import * as echarts from 'echarts'
 export function createPieChart(divName, dataArray) {
     var chart = echarts.init(document.getElementById(divName));
     var option = {
+        textStyle: {
+            color: '#fff',
+            fontSize: 16,
+            fontWeight: 'bold'
+        },
         tooltip: {
             trigger: 'item',
             formatter: "{a} <br/>{b}: {c} ({d}%)"
@@ -38,23 +43,55 @@ export function createPieChart(divName, dataArray) {
 export function createMultiChart(divName, dataArray, xaxis, yaxis, nameArray) {
     var chart = echarts.init(document.getElementById(divName))
     var option = {
+
         tooltip: {
-            formatter: '{a}:{c}  @ {b}'
+            formatter: '{a}:{c}  @ {b}',
+
         },
         xAxis: {
             data: dataArray[nameArray[0]].map(item => item[xaxis]),
             name: 'Time',
-            fontSize: 20
+            axisLabel: {
+                textStyle: {
+                    fontSize: 14,//
+                    color: '#000000', fontWeight: 'bold'
+                }
+            }
         },
         legend: {
             orient: 'horizontal',
             y: 'bottom',
             data: nameArray,
-            fontSize: 30,
+            textStyle: {
+                fontSize: 14,
+                color: '#000000', fontWeight: 'bold'
+            }
             // left: 250
         },
-        yAxis: [{ name: 'Amount', position: 'left', interval: 60 ,fontWeight: 'bold'}, {
-            name: 'Revenue', position: 'right', interval: 60,fontWeight: 'bold'
+        yAxis: [{
+            name: 'Amount', position: 'left', interval: 60, fontWeight: 'bold', axisLabel: {
+                textStyle: {
+                    fontSize: 14,//
+                    color: '#000000',
+                    fontWeight: 'bold'
+                },
+            }, nameTextStyle: {
+                fontSize: 14,//
+                color: '#000000',
+                fontWeight: 'bold'
+            }
+        }, {
+            name: 'Revenue', position: 'right', interval: 60, fontWeight: 'bold', axisLabel: {
+                textStyle: {
+                    fontSize: 14,//
+                    color: '#000000',
+                    fontWeight: 'bold'
+                },
+            }, nameTextStyle: {
+                fontSize: 14,//
+                color: '#000000',
+                fontWeight: 'bold'
+            }
         }],
         series: [
             {
@@ -78,7 +115,12 @@ export function createMultiChart(divName, dataArray, xaxis, yaxis, nameArray) {
                 name: nameArray[2]
 
             }
-        ]
+        ],
+        // textStyle:{
+        //     color: '#fff',
+        //     fontSize: 14,
+        //     fontWeight: 'bold'
+        // },
     }
     chart.setOption(option)
     window.addEventListener('resize', function () {
@@ -89,22 +131,41 @@ export function createMultiChart(divName, dataArray, xaxis, yaxis, nameArray) {
 export function createChart(divName, dataArr) {
     var Chart = echarts.init(document.getElementById(divName))
     var option = {
+
         title: {
             text: 'The Number of Outputs'
         },
         tooltip: {
             trigger: 'item',
-            formatter: "{c}"
+            formatter: "{c}",
+            textStyle: {
+                fontSize: 14,
+                color: '#000000', fontWeight: 'bold'
+            }
         },
         legend: {
             orient: 'vertical',
             data: ["Output's Amounts"],
             right: '37%',
-            bottom: 10
+            bottom: 10,
+            textStyle: {
+                fontSize: 14,
+                color: '#000000', fontWeight: 'bold'
+            }
         },
         xAxis: {
-
             min: 0,
+            axisLabel: {
+                textStyle: {
+                    fontSize: 14,//
+                    color: '#000000',
+                    fontWeight: 'bold'
+                },
+            }, nameTextStyle: {
+                fontSize: 14,//
+                color: '#000000',
+                fontWeight: 'bold'
+            }
             // max: 3,
             // text: 'Amounts'
         },
@@ -114,6 +175,17 @@ export function createChart(divName, dataArr) {
             name: "Amounts",
 
             data: dataArr.map(item => item.OutputAmount),
+            axisLabel: {
+                textStyle: {
+                    fontSize: 14,//
+                    color: '#000000',
+                    fontWeight: 'bold'
+                },
+            }, nameTextStyle: {
+                fontSize: 14,//
+                color: '#000000',
+                fontWeight: 'bold'
+            }
 
         }
         ,

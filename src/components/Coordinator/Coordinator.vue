@@ -9,12 +9,13 @@
 
             </el-col> -->
 
-            <el-col :span="12"><el-card class="box-card" style="height:30vh">
+            <el-col :span="12"><el-card class="box-card" style="height:36vh">
                     <div class="left-right"><span id="balance">Balance:</span><span>{{ $store.state.balance }}</span>
                     </div>
                     <div class="left-right"><span id="budget">Budget:</span><span>{{ $store.state.budget
                             }}</span>
                     </div>
+                    <br>
                     <div class="left-right"><el-input v-model="BudgetAdd" style="margin-right: 10px;"></el-input>
                         <el-button @click="ClickAddBudget" type="primary" style="width: 100%">Add
                         </el-button>
@@ -26,9 +27,9 @@
             </el-col>
 
             <el-col :span="12">
-                <el-card class="box-card" style="height:30vh">
+                <el-card class="box-card" style="height:36vh">
                     <div>Privacy Using Percentage</div>
-                    <div style="width:100%; height:20vh;object-fit: cover;" id="chart2"></div>
+                    <div style="width:100%; height:27vh;object-fit: cover;" id="chart2"></div>
                 </el-card>
             </el-col>
         </el-row>
@@ -259,7 +260,7 @@ export default {
     margin-bottom: 10px;
 
     :first-child {
-        flex: 2;
+        flex: 3;
     }
 
     :last-child {
