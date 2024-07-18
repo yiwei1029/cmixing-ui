@@ -120,8 +120,7 @@
                     <!-- <div>{{ findOutputByHash(OutputCurrentPick) }}</div> -->
                     <div class="left-right">
                         <span><i class="iconfont icon-jisuanqi"></i></span>
-                        <span><el-button style="width: 100%;" @click="calculateC(findInputByHash(InputCurrentPick),
-            findOutputByHash(OutputCurrentPick))">Calculate The
+                        <span><el-button style="width: 100%;" @click="queryProbByTxid(BlockCurrentPick)">Calculate The
                                 Probability</el-button></span>
                     </div>
 
@@ -149,7 +148,7 @@ export default {
     name: 'Request',
     data() {
         return {
-            Prob: '',
+            // Prob: '',
             showProb: false,
             BlockList: [],
             TimeList: [],
@@ -194,6 +193,7 @@ export default {
         BlockCurrentPick: {
             handler(newVal, oldVal) {
                 this.queryBlockById(newVal)
+                // this.queryProbByTxid(newVal)
                 // setTimeout(() => {
                 //     this.createChart('chart1', this.OutputStats)
                 // }, 100);
@@ -204,7 +204,18 @@ export default {
             handler(newVal, oldVal) {
                 this.createChart('chart1', newVal)
             }
-        }
+        },
+        // InputCurrentPick: {
+        //     handler(newVal, oldVal) {
+        //         this.queryProbByTxid(newVal)
+        //     },
+        // },
+        // OutputCurrentPick: {
+        //     handler(newVal, oldVal) {
+        //         this.queryProbByTxid(newVal)
+        //     },
+        // }
+
     },
     mounted() {
         // let blockData = this.$store.state.blockData.data
@@ -275,6 +286,24 @@ export default {
             }
             Promise.all(promises).then(() => {
                 this.BlockTimeList = this.TimeList.map((e, i) => [e, this.BlockList[i]])
+            })
+        },
+        queryProbByTxid(txid) {
+            axios.get("http://localhost:8080/f1/probability/" + txid).then(resp => {
+                // console.log(resp.data.data)
+                let tempData = resp.data.data
+                for (let input in tempData) {
+                    if (input === this.InputCurrentPick) {
+                        let problist = tempData[input]
+                        // console.log(problist)
+                        for (let probres of problist) {
+                            if (probres.address === this.OutputCurrentPick) {
+                                this.prob = probres.probability
+                                console.log(this.prob)
+                            }
+                        }
+                    }
+                }
             })
         },
         queryBlockById(blockId) {

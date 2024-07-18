@@ -219,10 +219,10 @@ export default {
             }
             // console.log(statsData==undefined)
             // console.log(statsData['c_range2'])
-            this.Stats = [{ title: 'Today Active User', value: statsData['user_num'] },
-            { title: 'Today Revenue', value: parseFloat(statsData['revenue_amount']).toFixed(3) },
-            { title: 'Today Requests', value: statsData['request_num'] },
-            { title: 'Today Transactions', value: statsData['transaction_num'] }]
+            this.Stats = [{ title: 'Today Active User', value: statsData['user_num'], color: '#5470c6' },
+            { title: 'Today Revenue', value: parseFloat(statsData['revenue_amount']).toFixed(3), color: '#91cc75' },
+            { title: 'Today Requests', value: statsData['request_num'], color: '#fac858' },
+            { title: 'Today Transactions', value: statsData['transaction_num'], color: '#ee6666' }]
             this.PrivacyPct = [{ name: 'c<0.02', value: statsData['c_range1'] },
             { name: 'c>0.3', value: statsData['c_range2'] },
             { name: '0.02<c<0.1', value: statsData['c_range3'] },
@@ -253,9 +253,9 @@ export default {
 
         },
         randomRgb(item) {
-            let R = Math.floor(Math.random() * 200 + 50);
-            let G = Math.floor(Math.random() * 200 + 50);
-            let B = Math.floor(Math.random() * 200 + 50);
+            let R = Math.floor(Math.random() * 100 + 102);
+            let G = Math.floor(Math.random() * 100 + 177);
+            let B = Math.floor(Math.random() * 100 + 255);
             // console.log(R, G, B)
             return {
                 background: 'rgb(' + R + ',' + G + ',' + B + ', .5)', borderRadius: '5px',
@@ -323,5 +323,11 @@ export default {
 
 .el-select {
     width: 50%;
+}
+
+.el-statistic .head span.title {
+    font-size: 14px;
+    font-weight: bold;
+    color: black;
 }
 </style>
