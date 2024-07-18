@@ -298,7 +298,7 @@ export default {
                         console.log(problist)
                         for (let probres of problist) {
                             if (probres.address == this.OutputCurrentPick) {
-                                console.log(probres.address)
+                                // console.log(probres.address)
                                 this.prob = probres.probability
                                 console.log(this.prob)
                             }
