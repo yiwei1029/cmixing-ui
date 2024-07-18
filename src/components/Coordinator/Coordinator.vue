@@ -9,9 +9,9 @@
 
             </el-col> -->
 
-            <el-col :span="12"><el-card class="box-card" style="height:36vh">
+            <el-col :span="12"><el-card class="box-card" style="height:33vh">
                     <div class="left-right"><span id="balance">Balance:</span><span>{{ $store.state.balance }}</span>
-                    </div>
+                    </div><br>
                     <div class="left-right"><span id="budget">Budget:</span><span>{{ $store.state.budget
                             }}</span>
                     </div>
@@ -27,9 +27,9 @@
             </el-col>
 
             <el-col :span="12">
-                <el-card class="box-card" style="height:36vh">
+                <el-card class="box-card" style="height:33vh">
                     <div>Privacy Using Percentage</div>
-                    <div style="width:100%; height:27vh;object-fit: cover;" id="chart2"></div>
+                    <div style="width:100%; height:30vh;object-fit: cover;" id="chart2"></div>
                 </el-card>
             </el-col>
         </el-row>
@@ -61,7 +61,7 @@
         <el-row :gutter="10">
             <el-col :span="24"><el-card class="box-card">
                     <div>Requests, Transactions and Revenue</div>
-                    <div style="width: 100%; height: 400px;" id="chart3">
+                    <div style="width: 100%; height: 38vh;" id="chart3">
                     </div>
                 </el-card></el-col>
         </el-row>
@@ -260,7 +260,7 @@ export default {
     margin-bottom: 10px;
 
     :first-child {
-        flex: 3;
+        flex: 4;
     }
 
     :last-child {

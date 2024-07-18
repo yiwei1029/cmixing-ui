@@ -217,7 +217,7 @@ export default {
             }
             this.getBlockTime(this.BlockList)
             // this.BlockTimeList = this.TimeList.map((e, i) => [e, this.BlockList[i]])
-            console.log(this.BlockTimeList)
+            // console.log(this.BlockTimeList)
 
             // console.log(this.TimeList)
         }).catch(err => { console.error(err) })

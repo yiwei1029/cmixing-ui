@@ -2,6 +2,12 @@ import * as echarts from 'echarts'
 export function createPieChart(divName, dataArray) {
     var chart = echarts.init(document.getElementById(divName));
     var option = {
+    //     grid: {
+    //     left: '50%',  // 调整图表左边距
+    //     right: '10%', // 调整图表右边距
+    //     top: '0%',   // 调整图表上边距
+    //     bottom: '10%' // 调整图表下边距
+    // },
         textStyle: {
             color: '#fff',
             fontSize: 16,
@@ -14,7 +20,8 @@ export function createPieChart(divName, dataArray) {
         legend: {
             orient: 'vertical',
             x: 'left',
-            left: 0,
+            left: 50,
+            top:40,
             data: dataArray.map(item => item.name)
         },
         series: [
@@ -29,6 +36,7 @@ export function createPieChart(divName, dataArray) {
                         formatter: '{d}%',
                     },
                 },
+                center:['60%','42%'],
                 data: [
                     ...dataArray
                 ]
