@@ -20,7 +20,7 @@ export function createPieChart(divName, dataArray) {
         legend: {
             orient: 'vertical',
             x: 'left',
-            left: 50,
+            left: 25,
             top:40,
             data: dataArray.map(item => item.name)
         },
@@ -36,7 +36,7 @@ export function createPieChart(divName, dataArray) {
                         formatter: '{d}%',
                     },
                 },
-                center:['60%','42%'],
+                center:['70%','42%'],
                 data: [
                     ...dataArray
                 ]

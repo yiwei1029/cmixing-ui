@@ -9,7 +9,7 @@
 
             </el-col> -->
 
-            <el-col :span="12"><el-card class="box-card" style="height:33vh">
+            <el-col :span="8"><el-card class="box-card" style="height:33vh">
                     <div class="left-right"><span id="balance">Balance:</span><span>{{ $store.state.balance }}</span>
                     </div><br>
                     <div class="left-right"><span id="budget">Budget:</span><span>{{ $store.state.budget
@@ -26,12 +26,40 @@
                 </el-card>
             </el-col>
 
-            <el-col :span="12">
+            <el-col :span="8">
                 <el-card class="box-card" style="height:33vh">
-                    <div>Privacy Using Percentage</div>
+                    <div style="text-align: center;">Privacy Using Percentage</div>
                     <div style="width:100%; height:30vh;object-fit: cover;" id="chart2"></div>
                 </el-card>
             </el-col>
+            <el-col :span="8">
+                <el-card style="height:33vh">
+                    <el-row>
+                        <el-col :span="12" v-for="item in Stats.slice(0, 2)" :key="item.title">
+                            <div>
+                                <el-statistic :title="item.title" group-separator="," :style="randomRgb()">
+                                    <template slot="formatter">
+                                        {{ item.value }}
+                                    </template>
+                                </el-statistic>
+                            </div>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="12" v-for="item in Stats.slice(2, 4)" :key="item.title">
+                            <div>
+                                <el-statistic :title="item.title" group-separator="," :style="randomRgb()">
+                                    <template slot="formatter">
+                                        {{ item.value }}
+                                    </template>
+                                </el-statistic>
+                            </div>
+                        </el-col>
+                    </el-row>
+                </el-card>
+            </el-col>
+
+
         </el-row>
         <!-- algo and commision rate -->
         <!--        <el-row :gutter="10">-->
@@ -66,7 +94,7 @@
                 </el-card></el-col>
         </el-row>
         <!-- Stats -->
-        <el-row :gutter="20">
+        <!-- <el-row :gutter="20">
 
             <el-col :span="6" v-for="item in Stats" :key="item.title">
                 <div>
@@ -77,7 +105,7 @@
                     </el-statistic>
                 </div>
             </el-col>
-        </el-row>
+        </el-row> -->
         <!-- 测试绘图更新 -->
         <el-row>
             <el-col>
@@ -155,6 +183,10 @@ export default {
 
         }
     },
+    computed: {
+        // stat1: () => this.Stats.splice(0, 2),
+        // stat2: () => this.Stats.splice(2, 2)
+    },
     components: { Chart },
     watch: {
         PrivacyPct: {
@@ -225,7 +257,10 @@ export default {
             let G = Math.floor(Math.random() * 200 + 50);
             let B = Math.floor(Math.random() * 200 + 50);
             // console.log(R, G, B)
-            return { background: 'rgb(' + R + ',' + G + ',' + B + ', .5)', borderRadius: '5px' }
+            return {
+                background: 'rgb(' + R + ',' + G + ',' + B + ', .5)', borderRadius: '5px',
+                height: '14vh', 'lineHeight': '7vh'
+            }
         },
         createPieChart,
         createMultiChart,
