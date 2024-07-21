@@ -132,7 +132,7 @@ export default {
             Budget: this.$store.state.budget,
             BudgetAdd: 1,
             BudgetReduce: 1,
-            commissionRate:0,
+            commissionRate: 0,
             Stats: [
                 { title: 'Today Active User', value: null },
                 { title: 'Today Revenue', value: null },
@@ -240,7 +240,10 @@ export default {
                 Revenue.push({ 'time': k, 'value': v.user_num })
             })
             // console.log(Request)
-            this.IndicatorByTime = { Request, Transaction, Revenue }
+            this.IndicatorByTime = {
+                'Request': Request.slice(-5), 'Transaction': Transaction.slice(-5),
+                'Revenue': Revenue.slice(-5)
+            }
             // console.log(this.IndicatorByTime)
         })
     },
