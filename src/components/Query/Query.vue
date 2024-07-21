@@ -13,8 +13,8 @@
             </el-col>
         </el-row>
         <!-- 左边 input output-->
-        <el-row :gutter="10" v-if="BlockCurrentPick">
-            <!-- <el-row :gutter="10"> -->
+        <!-- <el-row :gutter="10" v-if="BlockCurrentPick"> -->
+        <el-row :gutter="10">
             <el-col :span="12">
                 <!-- input -->
 
@@ -262,29 +262,22 @@ export default {
             }
             return null
         },
-        calculateC(inputObj, outputObj) {
-            let inputNum = inputObj.amount
-            let outputNum = outputObj.amount
-            // console.log(inputNum, outputNum)
-            let count = 0
-            for (const output of this.OutputList) {
-                // if (output.amount === outputNum) {
-                count++
-                // }
-
-            }
-            this.prob = inputNum / outputNum / count
-
-        },
         getBlockTime(blockList) {
-            const promises = []
-            for (const blockId of blockList) {
-                const promise = axios.get("http://localhost:8080/f1/transfer/" + blockId).then(resp => {
-                    this.TimeList.push(timestampToDate(resp.data.data.block.time))
-                })
-                promises.push(promise)
-            }
-            Promise.all(promises).then(() => {
+            // const promises = []
+            // for (const blockId of blockList) {
+            //     const promise = axios.get("http://localhost:8080/f1/transfer/" + blockId).then(resp => {
+            //         this.TimeList.push(timestampToDate(resp.data.data.block.time))
+            //     })
+            //     promises.push(promise)
+            // }
+            const promises = this.BlockList.map(blockId => axios.get(`http://localhost:8080/f1/transfer/${blockId}`).then(
+                resp => {
+                    return timestampToDate(resp.data.data.block.time)
+                }
+            ))
+            Promise.all(promises).then((times) => {
+                this.TimeList = times
+                // console.log(this.TimeList)
                 this.BlockTimeList = this.TimeList.map((e, i) => [e, this.BlockList[i]])
             })
         },
