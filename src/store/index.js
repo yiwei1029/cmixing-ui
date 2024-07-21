@@ -7,7 +7,9 @@ const store = new Vuex.Store({
     state: {
         blockData:{},
         budget:100,
-        balance:1000
+        balance:1000,
+        username:'',
+        wallets:['f1','f2','f3','f4','f5','f6','f7','f8','f9','f10']
     },
     mutations: { // 用来修改state和getters里面的数据
         updateBlockData(state, data) {

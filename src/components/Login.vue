@@ -33,12 +33,12 @@ export default {
             },
             LoginRules: {
                 username: [
-                    { required: true, message: 'pls input username', trigger: 'blur' },
-                    { min: 3, max: 10, message: 'length between 3 and 10', trigger: 'blur' }
+                    { required: true, message: 'pls input wallet name', trigger: 'blur' },
+                    { min: 0, max: 20, message: '', trigger: 'blur' }
                 ],
                 password: [
                     { required: true, message: 'pls input password', trigger: 'blur' },
-                    { min: 8, max: 99, message: 'length between 8 and 99', trigger: 'blur' }
+                    { min: 0, max: 99, message: '', trigger: 'blur' }
                 ]
             }
         }
@@ -48,13 +48,23 @@ export default {
     mounted() { },
     methods: {
         login() {
-            this.$router.push('/Coordinator')
+            const wallets = this.$store.state.wallets
+            if (wallets.includes(this.LoginForm.username)) {
+                this.$store.commit('username', this.LoginForm.username)
+                console.log(this.$store.state.username)
+                this.$message({ message: 'login success', type: 'success' })
+                this.$router.push('/Coordinator')
+            }
+            // this.$router.push('/Coordinator')
+            else {
+                this.$message({ message: 'wallet not found', type: 'error' })
+            }
         }
     }
 }
 </script>
 
-<style scoped >
+<style scoped>
 .login-container {
     background-color: #007acc;
     height: 100%;
