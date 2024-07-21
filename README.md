@@ -1,4 +1,4 @@
-# vue-code1
+# cmix
 
 ## Project setup
 ```
