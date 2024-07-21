@@ -11,17 +11,20 @@
 
             <el-col :span="8"><el-card class="box-card" style="height:33vh">
                     <div class="left-right"><span id="balance">Balance:</span><span>{{ $store.state.balance }}</span>
-                    </div><br>
+                    </div>
                     <div class="left-right"><span id="budget">Budget:</span><span>{{ $store.state.budget
                             }}</span>
                     </div>
-                    <br>
+                    <!-- <br> -->
                     <div class="left-right"><el-input v-model="BudgetAdd" style="margin-right: 10px;"></el-input>
                         <el-button @click="ClickAddBudget" type="primary" style="width: 100%">Add
                         </el-button>
                     </div>
                     <div class="left-right"><el-input v-model="BudgetReduce" style="margin-right: 10px;"></el-input>
                         <el-button @click="ClickReduceBudget" type="danger" style="width: 100%;">Remove</el-button>
+                    </div>
+                    <div class="right-left"><span id="commissionRate">Commission Rate:</span>
+                        <el-input style="width: 100%;" v-model="commissionRate"></el-input>
                     </div>
                 </el-card>
             </el-col>
@@ -129,6 +132,7 @@ export default {
             Budget: this.$store.state.budget,
             BudgetAdd: 1,
             BudgetReduce: 1,
+            commissionRate:0,
             Stats: [
                 { title: 'Today Active User', value: null },
                 { title: 'Today Revenue', value: null },
@@ -302,8 +306,22 @@ export default {
         flex: 1;
     }
 
+}
 
+.right-left {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    align-items: center;
 
+    :first-child {
+        flex: 2;
+
+    }
+
+    :last-child {
+        flex: 2;
+    }
 
 }
 

@@ -219,9 +219,9 @@ export default {
     },
     mounted() {
         // let blockData = this.$store.state.blockData.data
-        // 获取block txid列表
+        // 获取block txid列表最近三个
         axios.get('http://localhost:8080/f1/transfer').then(resp => {
-            for (const txid of resp.data.data) {
+            for (const txid of resp.data.data.slice(-3)) {
                 this.BlockList.push(txid)
                 // console.log(txid)
 
@@ -302,7 +302,7 @@ export default {
         },
         queryBlockById(blockId) {
             axios.get("http://localhost:8080/f1/transfer/" + blockId).then(resp => {
-                // console.log(resp.data)
+                console.log(resp.data)
                 let dataTemp = resp.data
                 this.BlockBasicInfo = {
                     height: dataTemp.data.block.height,
