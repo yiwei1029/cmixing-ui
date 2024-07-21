@@ -149,6 +149,7 @@ export default {
     data() {
         return {
             // Prob: '',
+            username: this.$store.state.username,
             showProb: false,
             BlockList: [],
             TimeList: [],
@@ -218,9 +219,10 @@ export default {
 
     },
     mounted() {
+        console.log(this.$store.state.username)
         // let blockData = this.$store.state.blockData.data
         // 获取block txid列表最近三个
-        axios.get('http://localhost:8080/f1/transfer').then(resp => {
+        axios.get(`http://localhost:8080/${this.username}/transfer`).then(resp => {
             for (const txid of resp.data.data.slice(-3)) {
                 this.BlockList.push(txid)
                 // console.log(txid)
@@ -270,7 +272,7 @@ export default {
             //     })
             //     promises.push(promise)
             // }
-            const promises = this.BlockList.map(blockId => axios.get(`http://localhost:8080/f1/transfer/${blockId}`).then(
+            const promises = this.BlockList.map(blockId => axios.get(`http://localhost:8080/${this.username}/transfer/${blockId}`).then(
                 resp => {
                     return timestampToDate(resp.data.data.block.time)
                 }
@@ -282,7 +284,7 @@ export default {
             })
         },
         queryProbByTxid(txid) {
-            axios.get("http://localhost:8080/f1/probability/" + txid).then(resp => {
+            axios.get(`http://localhost:8080/${this.username}/probability/${txid}`).then(resp => {
                 // console.log(resp.data.data)
                 let tempData = resp.data.data
                 for (let input in tempData) {
@@ -301,7 +303,7 @@ export default {
             })
         },
         queryBlockById(blockId) {
-            axios.get("http://localhost:8080/f1/transfer/" + blockId).then(resp => {
+            axios.get(`http://localhost:8080/${this.username}/transfer/${blockId}`).then(resp => {
                 console.log(resp.data)
                 let dataTemp = resp.data
                 this.BlockBasicInfo = {

@@ -85,6 +85,7 @@ export default {
     name: 'Request',
     data() {
         return {
+            username: this.$store.state.username,
             // disableAdd: false,
             dialogVisible: false,
             sendTransactionDisable: true,
@@ -145,7 +146,7 @@ export default {
                 "method": this.form.CoordToSelect,
                 "c": this.form.valueOfC
             }
-            axios.post('http://localhost:8080/f1/pre_transfer', formData).then(
+            axios.post(`http://localhost:8080/${this.username}/pre_transfer`, formData).then(
                 resp => {
                     // this.receiveDecomposition = !this.receiveDecomposition
                     // this.decomposeData = resp.data.data
@@ -193,7 +194,7 @@ export default {
             let formData = { ...this.decompose.decomposeData }
             // eventBus.$emit('block_data', 'hello')
             // console.log(formData)
-            axios.post('http://localhost:8080/f1/transfer', formData)
+            axios.post(`http://localhost:8080/${this.username}/transfer`, formData)
                 .then(resp => {
                     // console.log(resp.data)
                     // eventBus.$emit('block_data', resp.data)

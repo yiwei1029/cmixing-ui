@@ -12,6 +12,9 @@ const store = new Vuex.Store({
         wallets:['f1','f2','f3','f4','f5','f6','f7','f8','f9','f10']
     },
     mutations: { // 用来修改state和getters里面的数据
+        updateUsername(state, username){
+            state.username = username
+        },
         updateBlockData(state, data) {
             state.blockData = data
         },

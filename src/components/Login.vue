@@ -50,7 +50,7 @@ export default {
         login() {
             const wallets = this.$store.state.wallets
             if (wallets.includes(this.LoginForm.username)) {
-                this.$store.commit('username', this.LoginForm.username)
+                this.$store.commit('updateUsername', this.LoginForm.username)
                 console.log(this.$store.state.username)
                 this.$message({ message: 'login success', type: 'success' })
                 this.$router.push('/Coordinator')

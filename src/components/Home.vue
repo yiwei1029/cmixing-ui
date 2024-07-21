@@ -11,7 +11,9 @@
                     </el-menu-item>
                 </el-menu>
             </div>
-            <el-button type="primary" @click="backToLogin" class="btns" style="height: 60%;margin:auto 0">Exit</el-button>
+            <div>{{ 'Hello! Our user ' + this.username }}</div>
+            <el-button type="primary" @click="backToLogin" class="btns"
+                style="height: 60%;margin:auto 0">Exit</el-button>
         </el-header>
         <el-container>
             <!-- 主体区域 -->
@@ -29,6 +31,7 @@ export default {
     },
     data() {
         return {
+            username: this.$store.state.username,
             MenuList: [
                 { name: 'Coordinator', id: '1', path: 'coordinator', children: [] },
                 { name: 'Request', id: '2', path: 'request', children: [{ name: 'Directory', id: '2-1', path: 'directory' }] },
